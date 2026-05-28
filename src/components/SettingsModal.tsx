@@ -10,7 +10,8 @@ export function SettingsModal() {
     isSettingsOpen, setIsSettingsOpen,
     appTheme, setAppTheme,
     pieceStyle, setPieceStyle,
-    isPro: isProActive
+    isPro: isProActive,
+    userEmail
   } = usePro();
 
   if (!isSettingsOpen) return null;
@@ -102,6 +103,7 @@ export function SettingsModal() {
                 preview={<div className="w-8 h-8 rounded-full border-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] bg-transparent shrink-0" />}
                 title="Neon Rings"
                 desc="Cyberpunk aesthetic"
+                email={userEmail}
               />
 
               {/* Pixel Pets — PRO */}
@@ -112,6 +114,7 @@ export function SettingsModal() {
                 preview={<div className="text-3xl shrink-0 leading-none">🐶</div>}
                 title="Pixel Pets"
                 desc="Cute emoji avatars"
+                email={userEmail}
               />
 
               {/* Brick Builder — PRO */}
@@ -126,6 +129,7 @@ export function SettingsModal() {
                 }
                 title="Brick Builder"
                 desc="Lego style plastic bricks"
+                email={userEmail}
               />
             </div>
           </div>
@@ -136,7 +140,7 @@ export function SettingsModal() {
 }
 
 function ProPieceButton({
-  isActive, isPro, onClick, preview, title, desc
+  isActive, isPro, onClick, preview, title, desc, email
 }: {
   isActive: boolean;
   isPro: boolean;
@@ -144,7 +148,30 @@ function ProPieceButton({
   preview: React.ReactNode;
   title: string;
   desc: string;
+  email: string | null;
 }) {
+  const [loading, setLoading] = React.useState(false);
+
+  const handleUpgrade = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLoading(true);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: 'user', email: email || '' }), // email from context
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <button
       onClick={isPro ? onClick : undefined}
@@ -155,14 +182,10 @@ function ProPieceButton({
       }`}
     >
       {!isPro && (
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] rounded-xl flex items-center justify-end px-4 z-10 cursor-pointer">
-          <Link
-            href="/pro"
-            className="text-xs font-bold text-white flex items-center gap-1 bg-white/10 px-2 py-1 rounded-md border border-white/20"
-            onClick={(e) => { e.stopPropagation(); document.body.click(); }}
-          >
-            <Lock className="w-3 h-3" /> PRO
-          </Link>
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] rounded-xl flex items-center justify-end px-4 z-10 cursor-pointer" onClick={handleUpgrade}>
+          <div className="text-xs font-bold text-white flex items-center gap-1 bg-white/10 px-2 py-1 rounded-md border border-white/20 hover:bg-white/20 transition-all">
+            {loading ? <span className="animate-pulse">...</span> : <><Lock className="w-3 h-3" /> PRO</>}
+          </div>
         </div>
       )}
       {preview}

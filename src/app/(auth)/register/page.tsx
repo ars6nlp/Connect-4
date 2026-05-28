@@ -20,23 +20,23 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { username } },
-    });
-    if (error) {
-      setError(error.message);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { username } },
+      });
+      
+      if (error) throw error;
+      
+      // Auto-login successful or bypassed email confirmation
+      router.push('/dashboard');
+      router.refresh();
+      
+    } catch (err: any) {
+      console.error('Registration Error:', err);
+      setError(err.message || 'An error occurred during registration.');
       setLoading(false);
-    } else {
-      if (data.session) {
-        // Auto-login successful (Email Confirmations are disabled)
-        router.push('/dashboard');
-        router.refresh();
-      } else {
-        // Needs email confirmation
-        setSuccess(true);
-      }
     }
   };
 
