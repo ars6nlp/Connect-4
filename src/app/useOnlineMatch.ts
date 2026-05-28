@@ -1,0 +1,171 @@
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { supabase } from '@/lib/supabase';
+import { Player, GameMode } from './useConnectFour';
+
+export interface OnlineMatch {
+  id: string;
+  mode: GameMode;
+  status: 'in_progress' | 'completed' | 'abandoned';
+  player1_id: string | null;
+  player2_id: string | null;
+  winner_id: string | null;
+  moves: { player: Player; col: number; row: number }[];
+}
+
+export function useOnlineMatch(matchId: string | null) {
+  const [match, setMatch] = useState<OnlineMatch | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isPlayer1, setIsPlayer1] = useState<boolean>(false);
+  const [incomingTaunt, setIncomingTaunt] = useState<{ player: Player; emoji: string; id: number } | null>(null);
+  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+
+  // 1. Authenticate Anonymously
+  useEffect(() => {
+    async function initAuth() {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        const { data: signInData, error: signInError } = await supabase.auth.signInAnonymously();
+        if (signInError) {
+          setError('Failed to sign in anonymously: ' + signInError.message);
+          return;
+        }
+        setUserId(signInData.user?.id || null);
+      } else {
+        setUserId(sessionData.session.user.id);
+      }
+    }
+    initAuth();
+  }, []);
+
+  // 2. Fetch Match & Join Logic
+  useEffect(() => {
+    if (!matchId || !userId) return;
+
+    async function fetchAndJoinMatch() {
+      const { data, error } = await supabase
+        .from('matches')
+        .select('*')
+        .eq('id', matchId)
+        .single();
+
+      if (error) {
+        setError('Match not found or error loading match.');
+        return;
+      }
+
+      let currentMatch = data as OnlineMatch;
+
+      // If player1 is me
+      if (currentMatch.player1_id === userId) {
+        setIsPlayer1(true);
+      } 
+      // If player2 is empty and I am not player 1, join!
+      else if (!currentMatch.player2_id && currentMatch.player1_id !== userId) {
+        const { data: updatedMatch, error: updateError } = await supabase
+          .from('matches')
+          .update({ player2_id: userId })
+          .eq('id', matchId)
+          .select()
+          .single();
+
+        if (updateError) {
+          setError('Failed to join match.');
+          return;
+        }
+        currentMatch = updatedMatch;
+      }
+
+      setMatch(currentMatch);
+    }
+
+    fetchAndJoinMatch();
+  }, [matchId, userId]);
+
+  // 3. Realtime Subscription & Broadcasts
+  useEffect(() => {
+    if (!matchId) return;
+
+    const channel = supabase
+      .channel(`match:${matchId}`, {
+        config: {
+          broadcast: { self: false },
+        },
+      })
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'matches', filter: `id=eq.${matchId}` },
+        (payload) => {
+          setMatch(payload.new as OnlineMatch);
+        }
+      )
+      .on(
+        'broadcast',
+        { event: 'taunt' },
+        (payload) => {
+          setIncomingTaunt({
+            player: payload.payload.player as Player,
+            emoji: payload.payload.emoji as string,
+            id: Date.now(),
+          });
+        }
+      )
+      .subscribe();
+
+    channelRef.current = channel;
+
+    return () => {
+      supabase.removeChannel(channel);
+      channelRef.current = null;
+    };
+  }, [matchId]);
+
+  const sendMove = useCallback(async (newMoves: { player: Player; col: number; row: number }[], newStatus: 'in_progress' | 'completed' = 'in_progress') => {
+    if (!matchId) return;
+    await supabase
+      .from('matches')
+      .update({ moves: newMoves, status: newStatus })
+      .eq('id', matchId);
+  }, [matchId]);
+
+  const broadcastTaunt = useCallback((player: Player, emoji: string) => {
+    if (channelRef.current) {
+      channelRef.current.send({
+        type: 'broadcast',
+        event: 'taunt',
+        payload: { player, emoji },
+      });
+    }
+  }, []);
+
+  return { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt };
+}
+
+export async function createOnlineMatch(userId: string): Promise<string | null> {
+  // Ensure profile exists first (since it's a foreign key)
+  const { error: profileError } = await supabase.from('profiles').upsert(
+    { id: userId, username: `Guest_${userId.substring(0, 5)}` }, 
+    { onConflict: 'id' }
+  );
+
+  if (profileError) {
+    console.error("Error upserting profile:", profileError.message, profileError.details, profileError);
+  }
+
+  const { data, error } = await supabase
+    .from('matches')
+    .insert({
+      mode: 'online',
+      status: 'in_progress',
+      player1_id: userId,
+      moves: []
+    })
+    .select('id')
+    .single();
+
+  if (error || !data) {
+    console.error("Error creating match. Message:", error?.message, "Details:", error?.details, "Full Error:", JSON.stringify(error, null, 2));
+    return null;
+  }
+  return data.id;
+}

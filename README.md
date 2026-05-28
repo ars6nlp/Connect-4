@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Connect Four: Premium Web Platform
 
-## Getting Started
+## Что мы сделали?
+Мы создали современную, премиальную веб-платформу для классической игры "Четыре в ряд" (Connect Four), вдохновленную минималистичным и удобным интерфейсом **Chess.com**. Это не просто курсовая работа, а готовый MVP (Minimum Viable Product) потенциального стартапа.
 
-First, run the development server:
+### Основной функционал:
+- **Продвинутый ИИ (3 уровня сложности):** Включает интеграцию алгоритма Minimax с альфа-бета отсечением, который позволяет компьютеру (на уровне Hard) играть безупречно, просчитывая ходы на 5 шагов вперед.
+- **Подсказка лучшего хода (Hint) и Анализ (AI Coach):** Интеграция концепции помощника, который подсказывает оптимальный ход во время игры, а после партии дает краткую сводку с разбором критических ошибок.
+- **Локальное сохранение прогресса:** История матчей сохраняется в LocalStorage, позволяя пользователю просматривать свои прошлые игры и анализировать их.
+- **Бизнес-модель:** Разработаны страницы для глобального лидерборда и покупки премиум-подписки (Pro Plan) с уникальными фичами. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Для кого это?
+Продукт нацелен на любителей логических игр, шахмат и казуальных онлайн-дуэлей. Основная аудитория — люди, желающие быстро потренировать стратегическое мышление в перерыве, а также родители, обучающие детей основам тактики.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Почему это ценно?
+Большинство существующих реализаций "Четыре в ряд" выглядят как студенческие проекты из нулевых. Наш продукт выделяется на рынке за счет:
+1. **Премиального UX/UI:** Современный темный дизайн, отсутствие лишнего шума, интуитивно понятные элементы управления.
+2. **Инструментов удержания (Retention):** Наличие истории матчей, ранговой системы (Leaderboard) и подсказок (AI Coach) мотивирует игроков возвращаться и улучшать свои навыки.
+3. **Монетизационного потенциала:** Платформа изначально спроектирована с учетом Freemium-модели, где часть функционала (например, безлимитный анализ ИИ) доступна по подписке.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+### Технологический стек
+- **Frontend:** Next.js 14+ (App Router), React, TypeScript.
+- **Styling:** Tailwind CSS (v4), Lucide React (иконки).
+- **Логика:** Кастомные React-хуки для управления состоянием доски и алгоритм Minimax для вычисления ходов ИИ.
