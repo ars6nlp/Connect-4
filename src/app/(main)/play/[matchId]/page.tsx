@@ -214,9 +214,9 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
         {/* Real-time Chat Box */}
         {match.player2_id && !winner && (
           <GameChat 
-            incomingChat={incomingChat} 
+            incomingChat={incomingChat as any} 
             broadcastChat={broadcastChat} 
-            myPlayer={isPlayer1 ? 'red' : 'yellow'} 
+            myPlayerName={isPlayer1 ? 'Player 1' : 'Player 2'} 
           />
         )}
 

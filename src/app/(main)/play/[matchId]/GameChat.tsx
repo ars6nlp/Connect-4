@@ -5,18 +5,18 @@ import { Send } from 'lucide-react';
 
 interface ChatMessage {
   id: number;
-  player: Player;
+  sender: string;
   text: string;
   timestamp?: string; // New: support for timestamps
 }
 
 interface GameChatProps {
   incomingChat: ChatMessage | null;
-  broadcastChat: (player: Player, text: string, timestamp: string) => void;
-  myPlayer: Player;
+  broadcastChat: (sender: string, text: string) => void;
+  myPlayerName: string;
 }
 
-export function GameChat({ incomingChat, broadcastChat, myPlayer }: GameChatProps) {
+export function GameChat({ incomingChat, broadcastChat, myPlayerName }: GameChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -39,10 +39,10 @@ export function GameChat({ incomingChat, broadcastChat, myPlayer }: GameChatProp
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     
     // Broadcast message
-    broadcastChat(myPlayer, input, timeString);
+    broadcastChat(myPlayerName, input);
     
     // Show locally
-    setMessages(prev => [...prev, { id: Date.now(), player: myPlayer, text: input, timestamp: timeString }]);
+    setMessages(prev => [...prev, { id: Date.now(), sender: myPlayerName, text: input, timestamp: timeString }]);
     setInput('');
   };
 
@@ -60,14 +60,15 @@ export function GameChat({ incomingChat, broadcastChat, myPlayer }: GameChatProp
           <div className="text-white/30 italic text-center mt-10">No messages yet. Say hi!</div>
         ) : (
           messages.map(msg => {
-            const isMe = msg.player === myPlayer;
+            const isMe = msg.sender === myPlayerName;
             return (
-              <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+              <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'} mb-2`}>
                 <div className={`max-w-[85%] px-3 py-2 flex flex-col gap-1 ${
                   isMe 
                     ? 'bg-blue-600/30 border border-blue-500/30 text-blue-50 rounded-2xl rounded-br-sm' 
                     : 'bg-white/10 border border-white/10 text-white/90 rounded-2xl rounded-bl-sm'
                 }`}>
+                  {!isMe && <span className="text-[10px] font-bold text-amber-400">{msg.sender}</span>}
                   <span className="break-words leading-relaxed">{msg.text}</span>
                   <span className={`text-[10px] font-medium self-end opacity-60 ${isMe ? 'text-blue-200' : 'text-slate-400'}`}>
                     {msg.timestamp || new Date(msg.id).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

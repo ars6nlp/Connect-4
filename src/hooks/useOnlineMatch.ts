@@ -18,7 +18,7 @@ export function useOnlineMatch(matchId: string | null) {
   const [error, setError] = useState<string | null>(null);
   const [isPlayer1, setIsPlayer1] = useState<boolean>(false);
   const [incomingTaunt, setIncomingTaunt] = useState<{ player: Player; emoji: string; id: number } | null>(null);
-  const [incomingChat, setIncomingChat] = useState<{ player: Player; text: string; id: number } | null>(null);
+  const [incomingChat, setIncomingChat] = useState<{ sender: string; text: string; id: number } | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
 
   // 1. Authenticate Anonymously
@@ -113,10 +113,10 @@ export function useOnlineMatch(matchId: string | null) {
       )
       .on(
         'broadcast',
-        { event: 'chat' },
+        { event: 'chat-message' },
         (payload) => {
           setIncomingChat({
-            player: payload.payload.player as Player,
+            sender: payload.payload.sender as string,
             text: payload.payload.text as string,
             id: Date.now(),
           });
@@ -150,12 +150,12 @@ export function useOnlineMatch(matchId: string | null) {
     }
   }, []);
 
-  const broadcastChat = useCallback((player: Player, text: string, timestamp?: string) => {
+  const broadcastChat = useCallback((sender: string, text: string) => {
     if (channelRef.current) {
       channelRef.current.send({
         type: 'broadcast',
-        event: 'chat',
-        payload: { player, text, timestamp },
+        event: 'chat-message',
+        payload: { text, sender },
       });
     }
   }, []);
