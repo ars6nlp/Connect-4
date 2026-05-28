@@ -257,22 +257,24 @@ export function useConnectFour(mode: GameMode = 'pass_and_play', difficulty: Dif
     }, 100);
   }, [gameState.board, gameState.currentPlayer, gameState.winner, isAiThinking]);
 
+  const aiTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
-    if (mode === 'ai' && gameState.currentPlayer === 'yellow' && !gameState.winner && !isAiThinking) {
-      const timer1 = setTimeout(() => {
-        setIsAiThinking(true);
-      }, 0);
-      const timer2 = setTimeout(() => {
+    if (mode === 'ai' && gameState.currentPlayer === 'yellow' && !gameState.winner) {
+      // Prevent scheduling multiple moves
+      if (aiTimerRef.current) return;
+
+      setIsAiThinking(true);
+      
+      aiTimerRef.current = setTimeout(() => {
         const aiCol = getBestMove(gameState.board, 'yellow', difficulty);
         dropPiece(aiCol, true);
         setIsAiThinking(false);
+        aiTimerRef.current = null;
       }, difficulty === 'hard' ? 100 : 500);
-      return () => {
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-      };
     }
-  }, [gameState.currentPlayer, gameState.winner, mode, difficulty, gameState.board, isAiThinking, dropPiece]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState.currentPlayer, gameState.winner, mode, difficulty, gameState.board]);
 
   const syncWithRemoteMoves = useCallback((remoteMoves: { player: Player; col: number; row: number }[]) => {
     setGameState(prevState => {
