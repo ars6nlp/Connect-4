@@ -25,14 +25,28 @@ export function ProProvider({ children }: { children: ReactNode }) {
   const [isPro, setIsPro] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [appTheme, setAppTheme] = useState<AppTheme>('deep_slate');
-  const [pieceStyle, setPieceStyle] = useState<PieceStyle>('classic');
+  const [appTheme, setAppThemeState] = useState<AppTheme>('deep_slate');
+  const [pieceStyle, setPieceStyleState] = useState<PieceStyle>('classic');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  // Check for jury demo mode on mount
+  // Persist helpers
+  const setAppTheme = (theme: AppTheme) => {
+    setAppThemeState(theme);
+    if (typeof window !== 'undefined') localStorage.setItem('appTheme', theme);
+  };
+  const setPieceStyle = (style: PieceStyle) => {
+    setPieceStyleState(style);
+    if (typeof window !== 'undefined') localStorage.setItem('pieceStyle', style);
+  };
+
+  // Check for jury demo mode and load persisted settings on mount
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('is_pro_demo') === 'true') {
-      setIsPro(true);
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('is_pro_demo') === 'true') setIsPro(true);
+      const savedTheme = localStorage.getItem('appTheme') as AppTheme | null;
+      if (savedTheme) setAppThemeState(savedTheme);
+      const savedStyle = localStorage.getItem('pieceStyle') as PieceStyle | null;
+      if (savedStyle) setPieceStyleState(savedStyle);
     }
   }, []);
 
