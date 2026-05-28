@@ -42,7 +42,7 @@ export default function RootLayout({
               <History className="w-6 h-6 md:w-6 md:h-6 group-hover:scale-110 transition-transform text-blue-400" />
               <span className="text-[10px] md:text-base font-bold">History</span>
             </Link>
-            <Link href="/login" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
+            <Link href="/profile" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
               <User className="w-6 h-6 md:w-6 md:h-6 text-emerald-400 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
               <span className="text-[10px] md:text-base font-bold">Profile</span>
             </Link>
