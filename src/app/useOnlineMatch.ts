@@ -18,6 +18,7 @@ export function useOnlineMatch(matchId: string | null) {
   const [error, setError] = useState<string | null>(null);
   const [isPlayer1, setIsPlayer1] = useState<boolean>(false);
   const [incomingTaunt, setIncomingTaunt] = useState<{ player: Player; emoji: string; id: number } | null>(null);
+  const [incomingChat, setIncomingChat] = useState<{ player: Player; text: string; id: number } | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
 
   // 1. Authenticate Anonymously
@@ -110,6 +111,17 @@ export function useOnlineMatch(matchId: string | null) {
           });
         }
       )
+      .on(
+        'broadcast',
+        { event: 'chat' },
+        (payload) => {
+          setIncomingChat({
+            player: payload.payload.player as Player,
+            text: payload.payload.text as string,
+            id: Date.now(),
+          });
+        }
+      )
       .subscribe();
 
     channelRef.current = channel;
@@ -138,18 +150,30 @@ export function useOnlineMatch(matchId: string | null) {
     }
   }, []);
 
-  return { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt };
+  const broadcastChat = useCallback((player: Player, text: string) => {
+    if (channelRef.current) {
+      channelRef.current.send({
+        type: 'broadcast',
+        event: 'chat',
+        payload: { player, text },
+      });
+    }
+  }, []);
+
+  return { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat };
 }
 
 export async function createOnlineMatch(userId: string): Promise<string | null> {
   // Ensure profile exists first (since it's a foreign key)
-  const { error: profileError } = await supabase.from('profiles').upsert(
-    { id: userId, username: `Guest_${userId.substring(0, 5)}` }, 
-    { onConflict: 'id' }
-  );
-
-  if (profileError) {
-    console.error("Error upserting profile:", profileError.message, profileError.details, profileError);
+  const { data: existingProfile } = await supabase.from('profiles').select('id').eq('id', userId).single();
+  
+  if (!existingProfile) {
+    const { error: profileError } = await supabase.from('profiles').insert(
+      { id: userId, username: `Guest_${userId.substring(0, 5)}` }
+    );
+    if (profileError) {
+      console.error("Error inserting profile:", profileError.message, profileError.details);
+    }
   }
 
   const { data, error } = await supabase

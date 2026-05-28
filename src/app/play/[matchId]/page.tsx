@@ -7,12 +7,13 @@ import { useCheatCodes } from '@/app/useCheatCodes';
 import { Globe, User, Clock, AlertCircle, Copy, Check, Trophy, Zap } from 'lucide-react';
 import Link from 'next/link';
 import confetti from 'canvas-confetti';
+import { ChatBox } from './ChatBox';
 
 const EMOJIS = ['😂', '🤔', '🤯', '🥱'];
 
 export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: string }> }) {
   const { matchId } = React.use(params);
-  const { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt } = useOnlineMatch(matchId);
+  const { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat } = useOnlineMatch(matchId);
   const theme = useCheatCodes();
   const [copied, setCopied] = useState(false);
 
@@ -201,6 +202,15 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
               ))}
             </div>
           </div>
+        )}
+
+        {/* Real-time Chat Box */}
+        {match.player2_id && !winner && (
+          <ChatBox 
+            incomingChat={incomingChat} 
+            broadcastChat={broadcastChat} 
+            myPlayer={isPlayer1 ? 'red' : 'yellow'} 
+          />
         )}
 
         {winner && (

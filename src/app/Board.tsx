@@ -43,7 +43,7 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
   };
 
   return (
-    <div className={`w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto p-2 sm:p-3 md:p-5 flex flex-col gap-1 sm:gap-1.5 md:gap-2.5 transition-all duration-500 rounded-3xl ${boardBg}`}>
+    <div className={`w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[480px] mx-auto p-2 sm:p-3 md:p-5 flex flex-col gap-1 sm:gap-1.5 md:gap-2.5 transition-all duration-500 rounded-3xl ${boardBg}`}>
       {board.map((row, rowIndex) => (
         <div key={rowIndex} className="grid grid-cols-7 gap-1 sm:gap-1.5 md:gap-2.5">
           {row.map((cell, colIndex) => {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Play, Trophy, Star, History } from 'lucide-react';
+import { Play, Trophy, History, Star, User } from 'lucide-react';
 import Link from 'next/link';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -42,16 +42,17 @@ export default function RootLayout({
               <History className="w-6 h-6 md:w-6 md:h-6 group-hover:scale-110 transition-transform text-blue-400" />
               <span className="text-[10px] md:text-base font-bold">History</span>
             </Link>
-            <Link href="/pro" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group md:mt-4">
-              <Star className="w-6 h-6 md:w-6 md:h-6 text-yellow-500 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
-              <span className="text-[10px] md:text-base font-bold">Pro</span>
+            <Link href="/login" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group md:mt-4">
+              <User className="w-6 h-6 md:w-6 md:h-6 text-emerald-400 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
+              <span className="text-[10px] md:text-base font-bold">Profile</span>
             </Link>
           </nav>
 
+          {/* Desktop profile bottom link (optional, keeping it as link too) */}
           <div className="hidden md:flex mt-auto px-0 md:px-4 pb-4 justify-center md:justify-start">
-            <div className="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center font-bold text-white cursor-pointer hover:bg-white/20 transition-colors shadow-lg">
-              G
-            </div>
+            <Link href="/login" className="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center font-bold text-white cursor-pointer hover:bg-white/20 transition-colors shadow-lg">
+              <User className="w-5 h-5 text-white/90" />
+            </Link>
           </div>
         </aside>
 
