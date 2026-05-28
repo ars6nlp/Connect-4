@@ -37,7 +37,9 @@ export default function RegisterPage() {
       
     } catch (err: any) {
       console.error('Registration Error:', err);
+      alert('Registration Error: ' + (err.message || 'Unknown error'));
       setError(err.message || 'An error occurred during registration.');
+    } finally {
       setLoading(false);
     }
   };
