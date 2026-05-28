@@ -10,7 +10,7 @@ export function Navigation() {
   const { setIsSettingsOpen } = usePro();
 
   const links = [
-    { href: '/', label: 'Play', icon: Play, iconColor: 'text-pink-400' },
+    { href: '/dashboard', label: 'Play', icon: Play, iconColor: 'text-pink-400' },
     { href: '/leaderboard', label: 'Ranks', icon: Trophy, iconColor: 'text-yellow-400' },
     { href: '/history', label: 'History', icon: History, iconColor: 'text-blue-400' },
     { href: '/profile', label: 'Profile', icon: User, iconColor: 'text-emerald-400' },
@@ -19,7 +19,7 @@ export function Navigation() {
   return (
     <nav className="flex-1 w-full flex flex-row md:flex-col items-center justify-around md:justify-start md:space-y-1 px-2 md:px-0 h-full">
       {links.map((link) => {
-        const isActive = pathname === link.href || (link.href === '/' && pathname?.startsWith('/play'));
+        const isActive = pathname === link.href || (link.href === '/dashboard' && pathname?.startsWith('/play'));
         const Icon = link.icon;
         
         return (

@@ -8,7 +8,8 @@ import Link from 'next/link';
 export function SidebarWidgets({ isMobile = false }: { isMobile?: boolean }) {
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
-  const { isPro: isProActive, setIsPro: setIsProActive, appTheme, setAppTheme, pieceStyle, setPieceStyle, isSettingsOpen, setIsSettingsOpen } = usePro();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const { isPro: isProActive, setIsPro: setIsProActive, userId, userEmail, appTheme, setAppTheme, pieceStyle, setPieceStyle, isSettingsOpen, setIsSettingsOpen } = usePro();
   const [friendTag, setFriendTag] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -21,9 +22,28 @@ export function SidebarWidgets({ isMobile = false }: { isMobile?: boolean }) {
     }, 3000);
   };
 
-  const handleUnlockPro = () => {
-    setIsProActive(true);
-    setIsProModalOpen(false);
+  const handleUnlockPro = async () => {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch('/api/polar/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: userId ?? 'guest', email: userEmail }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        // Fallback: activate locally for demo if Polar not configured
+        setIsProActive(true);
+        setIsProModalOpen(false);
+      }
+    } catch {
+      setIsProActive(true);
+      setIsProModalOpen(false);
+    } finally {
+      setCheckoutLoading(false);
+    }
   };
 
   return (
@@ -198,9 +218,13 @@ export function SidebarWidgets({ isMobile = false }: { isMobile?: boolean }) {
 
               <button 
                 onClick={handleUnlockPro}
-                className="w-full py-4 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-[#1a1f2e] font-black rounded-2xl text-lg transition-all shadow-[0_0_32px_rgba(251,191,36,0.4)] hover:shadow-[0_0_48px_rgba(251,191,36,0.6)] active:scale-95"
+                disabled={checkoutLoading}
+                className="w-full py-4 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-[#1a1f2e] font-black rounded-2xl text-lg transition-all shadow-[0_0_32px_rgba(251,191,36,0.4)] hover:shadow-[0_0_48px_rgba(251,191,36,0.6)] active:scale-95 disabled:opacity-60 flex items-center justify-center gap-2"
               >
-                Unlock for $4.99
+                {checkoutLoading ? (
+                  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/></svg>
+                ) : null}
+                Upgrade for $4.99 / month
               </button>
             </div>
             

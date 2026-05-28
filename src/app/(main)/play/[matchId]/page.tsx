@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useConnectFour } from '@/app/useConnectFour';
-import { useOnlineMatch } from '@/app/useOnlineMatch';
-import { Board } from '@/app/Board';
-import { useCheatCodes } from '@/app/useCheatCodes';
+import { useConnectFour } from '@/hooks/useConnectFour';
+import { useOnlineMatch } from '@/hooks/useOnlineMatch';
+import { Board } from '@/components/Board';
+import { useCheatCodes } from '@/hooks/useCheatCodes';
 import { Globe, User, Clock, AlertCircle, Copy, Check, Trophy, Zap, Palette } from 'lucide-react';
 import { usePro } from '@/context/ProContext';
 import Link from 'next/link';
@@ -117,11 +117,11 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
     <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-center p-4 pt-12 md:pt-6 lg:pt-8 pb-8 gap-6 relative transition-colors duration-1000 w-full ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
       
       <div className="w-full max-w-3xl flex justify-start lg:hidden mb-2">
-        <Link href="/" className="text-white/70 hover:text-white/100 text-sm font-bold bg-white/10 hover:bg-white/20 px-5 py-3 rounded-full border border-white/20 backdrop-blur-md transition-colors shadow-lg flex items-center gap-2 mt-safe">
+        <Link href="/dashboard" className="text-white/70 hover:text-white/100 text-sm font-bold bg-white/10 hover:bg-white/20 px-5 py-3 rounded-full border border-white/20 backdrop-blur-md transition-colors shadow-lg flex items-center gap-2">
           &larr; Leave Match
         </Link>
       </div>
-      <Link href="/" className="hidden lg:flex absolute top-4 left-4 text-white/50 hover:text-white/90 text-sm font-bold z-10 bg-white/5 hover:bg-white/10 px-4 py-3 min-h-[48px] rounded-full border border-white/10 backdrop-blur-md transition-colors shadow-lg items-center gap-2">
+      <Link href="/dashboard" className="hidden lg:flex absolute top-4 left-4 text-white/50 hover:text-white/90 text-sm font-bold z-10 bg-white/5 hover:bg-white/10 px-4 py-3 min-h-[48px] rounded-full border border-white/10 backdrop-blur-md transition-colors shadow-lg items-center gap-2">
         &larr; Leave Match
       </Link>
 
@@ -227,7 +227,7 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
               <h2 className="text-3xl font-black text-white/90 mb-2 drop-shadow-md">
                 {winner === 'draw' ? "It's a Draw!" : `${winner === 'red' ? 'Player 1' : 'Player 2'} Wins!`}
               </h2>
-              <Link href="/" className="inline-block mt-4 px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white/90 font-bold rounded-2xl transition-all w-full shadow-lg active:scale-[0.98]">
+              <Link href="/dashboard" className="inline-block mt-4 px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white/90 font-bold rounded-2xl transition-all w-full shadow-lg active:scale-[0.98]">
                 Main Menu
               </Link>
             </div>
