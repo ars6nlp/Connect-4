@@ -32,8 +32,10 @@ export default function LoginPage() {
       console.log("5. Login success, session:", data.session?.user?.email);
       console.log("6. Redirecting to dashboard...");
       
-      // Use window.location for a hard redirect to ensure auth state is cleanly loaded
-      window.location.href = '/dashboard';
+      // Use Next.js router.push combined with router.refresh() to ensure reactivity
+      // without doing a full browser page reload
+      router.push('/dashboard');
+      router.refresh();
       
     } catch (err: any) {
       console.error('7. Catch block - Login Error:', err);

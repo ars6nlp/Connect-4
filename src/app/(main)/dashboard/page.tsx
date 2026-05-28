@@ -58,7 +58,11 @@ export default function Home() {
       }
       if (userId) {
         const matchId = await createOnlineMatch(userId);
-        if (matchId) { router.push(`/play/${matchId}`); return; }
+        if (matchId) { 
+          router.push(`/play/${matchId}`); 
+          router.refresh();
+          return; 
+        }
       }
     } catch (e) {
       console.error(e);

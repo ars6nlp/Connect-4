@@ -39,8 +39,10 @@ export default function RegisterPage() {
       console.log("6. Redirecting to dashboard...");
       
       // Auto-login successful or bypassed email confirmation
-      // Use window.location for hard redirect
-      window.location.href = '/dashboard';
+      // Use Next.js router.push combined with router.refresh() to ensure reactivity
+      // without doing a full browser page reload
+      router.push('/dashboard');
+      router.refresh();
       
     } catch (err: any) {
       console.error('7. Catch block - Registration Error:', err);
