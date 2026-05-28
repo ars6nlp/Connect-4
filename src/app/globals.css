@@ -20,6 +20,21 @@
     background: #000000;
   }
 
+  /* Theme definitions for dynamic background */
+  body.theme-deep_slate {
+    background: linear-gradient(to bottom right, #0f172a, #1e293b) !important;
+  }
+  body.theme-midnight {
+    background: #000000 !important;
+  }
+  body.theme-cyberpunk {
+    background: linear-gradient(to bottom right, #12002b, #35014c) !important;
+  }
+  body.theme-minimalist {
+    background: #f4f4f5 !important;
+    color: #000000 !important;
+  }
+
   /* Matrix cheat code override */
   body.theme-matrix {
     background: #000000 !important;

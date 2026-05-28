@@ -168,8 +168,16 @@ export async function createOnlineMatch(userId: string): Promise<string | null> 
   const { data: existingProfile } = await supabase.from('profiles').select('id').eq('id', userId).single();
   
   if (!existingProfile) {
-    const { error: profileError } = await supabase.from('profiles').insert(
-      { id: userId, username: `Guest_${userId.substring(0, 5)}` }
+    const { error: profileError } = await supabase.from('profiles').upsert(
+      { 
+        id: userId, 
+        username: `Guest_${userId.substring(0, 5)}`,
+        elo_rating: 1400,
+        wins: 0,
+        losses: 0,
+        is_pro: false
+      },
+      { onConflict: 'id' }
     );
     if (profileError) {
       console.error("Error inserting profile:", profileError.message, profileError.details);
