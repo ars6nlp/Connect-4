@@ -4,13 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { useConnectFour, GameMode, Player } from './useConnectFour';
 import { Board } from './Board';
 import { Difficulty } from '@/lib/ai';
-import { Bot, User, Globe, Trophy, Lightbulb, Zap, Clock, ArrowLeft, Play, Palette } from 'lucide-react';
+import { Bot, User, Globe, Trophy, Lightbulb, Zap, Clock, ArrowLeft, Play, Palette, Settings } from 'lucide-react';
 import { usePro } from '@/context/ProContext';
 import confetti from 'canvas-confetti';
 import { useCheatCodes } from './useCheatCodes';
 import { useRouter } from 'next/navigation';
 import { createOnlineMatch } from './useOnlineMatch';
 import { supabase } from '@/lib/supabase';
+import { SidebarWidgets } from './SidebarWidgets';
 
 const EMOJIS = ['😂', '🤔', '🤯', '🥱'];
 
@@ -180,6 +181,11 @@ export default function Home() {
           >
             Play
           </button>
+
+          {/* Render Friends & PRO card on mobile only */}
+          <div className="mt-4 md:hidden">
+            <SidebarWidgets isMobile={true} />
+          </div>
         </div>
       </div>
     );

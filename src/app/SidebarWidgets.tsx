@@ -5,7 +5,7 @@ import { Crown, Users, X, ChevronRight, Check, Settings, Image as ImageIcon, Spa
 import { usePro, AppTheme, PieceStyle } from '@/context/ProContext';
 import Link from 'next/link';
 
-export function SidebarWidgets() {
+export function SidebarWidgets({ isMobile = false }: { isMobile?: boolean }) {
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
   const { isPro: isProActive, setIsPro: setIsProActive, appTheme, setAppTheme, pieceStyle, setPieceStyle, isSettingsOpen, setIsSettingsOpen } = usePro();
@@ -28,7 +28,7 @@ export function SidebarWidgets() {
 
   return (
     <>
-      <div className="hidden md:flex mt-auto flex-col gap-6 px-4">
+      <div className={`${isMobile ? 'flex md:hidden mt-8' : 'hidden md:flex mt-auto'} flex-col gap-6 px-4`}>
         
         {/* Friends Online Section */}
         <div>
