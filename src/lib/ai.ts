@@ -1,4 +1,4 @@
-import { Player, Cell } from '@/app/useConnectFour';
+import { Player, Cell } from '@/hooks/useConnectFour';
 
 const ROWS = 6;
 const COLS = 7;

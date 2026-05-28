@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { Player } from '@/app/useConnectFour';
+import { Player } from '@/hooks/useConnectFour';
 import { Send } from 'lucide-react';
 
 interface ChatMessage {

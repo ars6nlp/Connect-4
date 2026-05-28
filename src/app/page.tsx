@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Play, Trophy, Users, ShieldCheck } from 'lucide-react';
+import { Play, Trophy, ShieldCheck, Globe } from 'lucide-react';
 
 export default function LandingPage() {
   return (

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { History as HistoryIcon, Trophy, User, Bot, Clock } from 'lucide-react';
-import { MatchHistoryEntry } from '../useConnectFour';
+import { MatchHistoryEntry } from '@/hooks/useConnectFour';
 
 export default function HistoryPage() {
   const [history] = useState<MatchHistoryEntry[]>(() => {

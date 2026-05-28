@@ -1,6 +1,6 @@
 import React from 'react';
-import { Cell as CellType, Player } from './useConnectFour';
-import { Theme } from './useCheatCodes';
+import { Cell as CellType, Player } from '@/hooks/useConnectFour';
+import { Theme } from '@/hooks/useCheatCodes';
 import { usePro } from '@/context/ProContext';
 
 interface BoardProps {
