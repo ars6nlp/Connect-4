@@ -8,9 +8,8 @@ const polar = new Polar({
 export async function POST(req: Request) {
   try {
     const { userId, email } = await req.json();
-
-    const result = await polar.checkouts.custom.create({
-      productId: process.env.POLAR_PRODUCT_ID || '',
+    const result = await polar.checkouts.create({
+      products: [process.env.POLAR_PRODUCT_ID || ''],
       successUrl: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dashboard?success=true`,
       customerEmail: email || undefined,
       metadata: {
