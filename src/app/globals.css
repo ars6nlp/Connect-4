@@ -12,63 +12,32 @@
     "99%": { transform: "translateY(-5px)", "animation-timing-function": "ease-in" },
     "100%": { transform: "translateY(0)" },
   };
-  --animate-mesh-gradient: mesh-gradient 15s ease infinite;
-  --keyframes-mesh-gradient: {
-    "0%, 100%": { "background-position": "0% 50%" },
-    "50%": { "background-position": "100% 50%" },
-  };
 }
 
 @layer base {
   body {
     @apply text-white antialiased overflow-hidden min-h-[100dvh];
-    background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #020617);
-    background-size: 400% 400%;
-    animation: mesh-gradient 15s ease infinite;
-  }
-  
-  .dark body {
-    @apply text-white;
-    background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #020617);
-    background-size: 400% 400%;
-    animation: mesh-gradient 15s ease infinite;
+    background: #0a0a0a;
   }
 
-  body.theme-midnight {
+  /* Matrix cheat code override */
+  body.theme-matrix {
     background: #000000 !important;
-    animation: none !important;
   }
 
-  body.theme-cyberpunk {
-    background: linear-gradient(135deg, #12002b, #2a0845, #35014c) !important;
-    animation: none !important;
+  /* Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
   }
-
-  body.theme-minimalist {
-    background: #f1f5f9 !important;
-    animation: none !important;
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.03);
+    border-radius: 9999px;
   }
-  
-  /* Minimalist Theme Overrides */
-  body.theme-minimalist * {
-    border-color: rgba(0, 0, 0, 0.1) !important;
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 9999px;
   }
-  body.theme-minimalist .text-white,
-  body.theme-minimalist .text-white\/90,
-  body.theme-minimalist .text-white\/80,
-  body.theme-minimalist .text-white\/60,
-  body.theme-minimalist .text-white\/50,
-  body.theme-minimalist .text-white\/40,
-  body.theme-minimalist .text-white\/30 {
-    color: #0f172a !important;
-  }
-  body.theme-minimalist .bg-white\/5 {
-    background-color: rgba(0, 0, 0, 0.05) !important;
-  }
-  body.theme-minimalist .bg-white\/10 {
-    background-color: rgba(0, 0, 0, 0.1) !important;
-  }
-  body.theme-minimalist .bg-white\/20 {
-    background-color: rgba(0, 0, 0, 0.15) !important;
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
   }
 }

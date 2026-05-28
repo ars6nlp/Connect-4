@@ -10,10 +10,10 @@ export function Navigation() {
   const { setIsSettingsOpen } = usePro();
 
   const links = [
-    { href: '/dashboard', label: 'Play', icon: Play, iconColor: 'text-pink-400' },
-    { href: '/leaderboard', label: 'Ranks', icon: Trophy, iconColor: 'text-yellow-400' },
-    { href: '/history', label: 'History', icon: History, iconColor: 'text-blue-400' },
-    { href: '/profile', label: 'Profile', icon: User, iconColor: 'text-emerald-400' },
+    { href: '/dashboard', label: 'Play', icon: Play },
+    { href: '/leaderboard', label: 'Ranks', icon: Trophy },
+    { href: '/history', label: 'History', icon: History },
+    { href: '/profile', label: 'Profile', icon: User },
   ];
 
   return (
@@ -34,7 +34,7 @@ export function Navigation() {
               }
             `}
           >
-            <Icon className={`w-6 h-6 md:w-6 md:h-6 transition-transform ${isActive ? 'scale-110 drop-shadow-[0_0_12px_currentColor]' : 'group-hover:scale-110'} ${link.iconColor}`} />
+            <Icon className={`w-6 h-6 md:w-6 md:h-6 transition-transform ${isActive ? 'scale-110 drop-shadow-[0_0_12px_currentColor]' : 'group-hover:scale-110'}`} />
             <span className={`text-[10px] md:text-base font-bold ${isActive ? 'drop-shadow-md' : ''}`}>
               {link.label}
             </span>
