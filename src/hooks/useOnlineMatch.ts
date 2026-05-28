@@ -19,6 +19,7 @@ export function useOnlineMatch(matchId: string | null) {
   const [isPlayer1, setIsPlayer1] = useState<boolean>(false);
   const [incomingTaunt, setIncomingTaunt] = useState<{ player: Player; emoji: string; id: number } | null>(null);
   const [incomingChat, setIncomingChat] = useState<{ sender: string; text: string; id: number } | null>(null);
+  const [incomingMove, setIncomingMove] = useState<{ moves: { player: Player; col: number; row: number }[], status: string } | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
 
   // 1. Authenticate Anonymously
@@ -126,6 +127,14 @@ export function useOnlineMatch(matchId: string | null) {
           });
         }
       )
+      .on(
+        'broadcast',
+        { event: 'game-move' },
+        (payload) => {
+          console.log('[Realtime] Game move received via broadcast:', payload.payload);
+          setIncomingMove(payload.payload as any);
+        }
+      )
       .subscribe((status, err) => {
         console.log(`[Realtime] Channel subscription status: ${status}`);
         if (err) {
@@ -144,11 +153,24 @@ export function useOnlineMatch(matchId: string | null) {
 
   const sendMove = useCallback(async (newMoves: { player: Player; col: number; row: number }[], newStatus: 'in_progress' | 'completed' = 'in_progress') => {
     if (!matchId) return;
-    await supabase
+    const { error } = await supabase
       .from('matches')
       .update({ moves: newMoves, status: newStatus })
       .eq('id', matchId);
+    if (error) {
+      console.error('[Realtime] Error saving move to DB:', error);
+    }
   }, [matchId]);
+
+  const broadcastMove = useCallback((moves: { player: Player; col: number; row: number }[], status: string) => {
+    if (channelRef.current) {
+      channelRef.current.send({
+        type: 'broadcast',
+        event: 'game-move',
+        payload: { moves, status },
+      });
+    }
+  }, []);
 
   const broadcastTaunt = useCallback((player: Player, emoji: string) => {
     if (channelRef.current) {
@@ -170,7 +192,7 @@ export function useOnlineMatch(matchId: string | null) {
     }
   }, []);
 
-  return { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat };
+  return { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat, broadcastMove, incomingMove };
 }
 
 export async function createOnlineMatch(userId: string): Promise<string | null> {

@@ -15,7 +15,7 @@ const EMOJIS = ['😂', '🤔', '🤯', '🥱'];
 export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: string }> }) {
   const { matchId } = React.use(params);
   const { isPro } = usePro();
-  const { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat } = useOnlineMatch(matchId);
+  const { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat, broadcastMove, incomingMove } = useOnlineMatch(matchId);
   const theme = useCheatCodes();
   const [copied, setCopied] = useState(false);
 
@@ -49,19 +49,30 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
     }
   }, [winner]);
 
-  // Sync state from remote match
+  // Sync state from remote match (Postgres updates as fallback)
   useEffect(() => {
     if (match?.moves) {
       syncWithRemoteMoves(match.moves);
     }
   }, [match, syncWithRemoteMoves]);
 
+  // Sync state from instant broadcast (Realtime Game Moves)
+  useEffect(() => {
+    if (incomingMove?.moves) {
+      syncWithRemoteMoves(incomingMove.moves);
+    }
+  }, [incomingMove, syncWithRemoteMoves]);
+
   // Send local moves to remote
   useEffect(() => {
     if (match && moves.length > match.moves.length) {
-       sendMove(moves, winner ? 'completed' : 'in_progress');
+       const status = winner ? 'completed' : 'in_progress';
+       sendMove(moves, status);
+       if (broadcastMove) {
+         broadcastMove(moves, status);
+       }
     }
-  }, [moves, match, sendMove, winner]);
+  }, [moves, match, sendMove, broadcastMove, winner]);
 
   const handleDropPiece = (col: number) => {
     if (!match) return;
