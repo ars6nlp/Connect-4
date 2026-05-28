@@ -112,7 +112,7 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
   }
 
   return (
-    <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-center p-4 py-8 gap-8 relative transition-colors duration-1000 w-full ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
+    <div className={`min-h-[100dvh] lg:min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-center p-4 pt-20 lg:pt-8 pb-8 gap-8 relative transition-colors duration-1000 w-full overflow-y-auto ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
       
       <Link href="/" className="absolute top-4 left-4 text-white/50 hover:text-white/90 text-sm font-bold z-10 bg-white/5 hover:bg-white/10 px-4 py-3 min-h-[48px] rounded-full border border-white/10 backdrop-blur-md transition-colors shadow-lg flex items-center gap-2">
         &larr; Leave Match

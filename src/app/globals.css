@@ -21,7 +21,7 @@
 
 @layer base {
   body {
-    @apply text-white antialiased overflow-hidden min-h-screen;
+    @apply text-white antialiased overflow-hidden min-h-[100dvh];
     background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #020617);
     background-size: 400% 400%;
     animation: mesh-gradient 15s ease infinite;
