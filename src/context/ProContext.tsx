@@ -1,24 +1,35 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type SkinType = 'standard' | 'pixel_pets';
+export type AppTheme = 'deep_slate' | 'midnight' | 'cyberpunk' | 'minimalist';
+export type PieceStyle = 'classic' | 'neon' | 'pixel_pets';
 
-interface ProContextType {
+interface AppContextType {
   isPro: boolean;
   setIsPro: (value: boolean) => void;
-  selectedSkin: SkinType;
-  setSelectedSkin: (skin: SkinType) => void;
+  appTheme: AppTheme;
+  setAppTheme: (theme: AppTheme) => void;
+  pieceStyle: PieceStyle;
+  setPieceStyle: (style: PieceStyle) => void;
 }
 
-const ProContext = createContext<ProContextType | undefined>(undefined);
+const ProContext = createContext<AppContextType | undefined>(undefined);
 
 export function ProProvider({ children }: { children: ReactNode }) {
   const [isPro, setIsPro] = useState(false);
-  const [selectedSkin, setSelectedSkin] = useState<SkinType>('standard');
+  const [appTheme, setAppTheme] = useState<AppTheme>('deep_slate');
+  const [pieceStyle, setPieceStyle] = useState<PieceStyle>('classic');
+
+  useEffect(() => {
+    // Remove all theme classes first
+    document.body.classList.remove('theme-deep_slate', 'theme-midnight', 'theme-cyberpunk', 'theme-minimalist');
+    // Add the new theme class
+    document.body.classList.add(`theme-${appTheme}`);
+  }, [appTheme]);
 
   return (
-    <ProContext.Provider value={{ isPro, setIsPro, selectedSkin, setSelectedSkin }}>
+    <ProContext.Provider value={{ isPro, setIsPro, appTheme, setAppTheme, pieceStyle, setPieceStyle }}>
       {children}
     </ProContext.Provider>
   );

@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Crown, Users, X, ChevronRight, Check } from 'lucide-react';
-import { usePro } from '@/context/ProContext';
+import { Crown, Users, X, ChevronRight, Check, Settings, Image as ImageIcon, Sparkles, Lock } from 'lucide-react';
+import { usePro, AppTheme, PieceStyle } from '@/context/ProContext';
 import Link from 'next/link';
 
 export function SidebarWidgets() {
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
-  const { isPro: isProActive, setIsPro: setIsProActive } = usePro();
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const { isPro: isProActive, setIsPro: setIsProActive, appTheme, setAppTheme, pieceStyle, setPieceStyle } = usePro();
   const [friendTag, setFriendTag] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -79,6 +80,15 @@ export function SidebarWidgets() {
             )}
           </div>
         </div>
+
+        {/* Settings Button */}
+        <button 
+          onClick={() => setIsSettingsModalOpen(true)}
+          className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-slate-400 hover:text-white"
+        >
+          <Settings className="w-5 h-5" />
+          <span className="text-sm font-medium">Settings</span>
+        </button>
       </div>
 
       {/* --- ALL FRIENDS MODAL --- */}
@@ -195,6 +205,135 @@ export function SidebarWidgets() {
               </button>
             </div>
             
+          </div>
+        </div>
+      )}
+      {/* --- SETTINGS MODAL --- */}
+      {isSettingsModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#1a1f2e] border border-white/10 rounded-2xl w-full max-w-md shadow-[0_24px_64px_rgba(0,0,0,0.6)] relative overflow-hidden flex flex-col max-h-[80vh]">
+            
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5">
+              <div className="flex items-center gap-2">
+                <Settings className="w-5 h-5 text-white/80" />
+                <h2 className="text-lg font-bold text-white/90">Settings</h2>
+              </div>
+              <button onClick={() => setIsSettingsModalOpen(false)} className="text-white/50 hover:text-white bg-white/5 hover:bg-white/10 p-1.5 rounded-lg transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto flex-1 flex flex-col gap-8">
+              
+              {/* Theme Selection */}
+              <div>
+                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4" /> Choose Theme / Background
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {(['deep_slate', 'midnight', 'cyberpunk', 'minimalist'] as AppTheme[]).map((theme) => (
+                    <button
+                      key={theme}
+                      onClick={() => setAppTheme(theme)}
+                      className={`relative p-4 rounded-xl border flex flex-col items-center gap-2 transition-all ${
+                        appTheme === theme 
+                          ? 'border-emerald-500 bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.2)]' 
+                          : 'border-white/10 bg-white/5 hover:bg-white/10'
+                      }`}
+                    >
+                      <div className={`w-full h-12 rounded-lg border border-white/10 mb-2 ${
+                        theme === 'deep_slate' ? 'bg-gradient-to-br from-slate-900 to-slate-800' :
+                        theme === 'midnight' ? 'bg-black' :
+                        theme === 'cyberpunk' ? 'bg-gradient-to-br from-[#12002b] to-[#35014c]' :
+                        'bg-slate-100'
+                      }`} />
+                      <span className={`text-xs font-bold capitalize ${appTheme === theme ? 'text-emerald-400' : 'text-slate-300'}`}>
+                        {theme.replace('_', ' ')}
+                      </span>
+                      {appTheme === theme && (
+                        <div className="absolute top-2 right-2 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
+                          <Check className="w-3 h-3 text-[#1a1f2e]" />
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Piece Style Selection */}
+              <div>
+                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" /> Piece Style
+                </h3>
+                <div className="grid grid-cols-1 gap-3">
+                  
+                  {/* Classic */}
+                  <button
+                    onClick={() => setPieceStyle('classic')}
+                    className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                      pieceStyle === 'classic' 
+                        ? 'border-emerald-500 bg-emerald-500/10' 
+                        : 'border-white/10 bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-rose-500 to-red-600 shadow-inner border border-rose-400/60 flex-shrink-0" />
+                    <div className="flex flex-col text-left">
+                      <span className="text-sm font-bold text-white/90">Classic Glass</span>
+                      <span className="text-xs text-slate-400">Standard 3D spheres</span>
+                    </div>
+                  </button>
+
+                  {/* Neon (Requires PRO) */}
+                  <button
+                    onClick={() => isProActive ? setPieceStyle('neon') : setIsProModalOpen(true)}
+                    className={`relative flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                      pieceStyle === 'neon' 
+                        ? 'border-emerald-500 bg-emerald-500/10' 
+                        : 'border-white/10 bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    {!isProActive && (
+                      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] rounded-xl flex items-center justify-end px-4 z-10 cursor-pointer">
+                        <span className="text-xs font-bold text-yellow-400 flex items-center gap-1 bg-yellow-500/20 px-2 py-1 rounded-md border border-yellow-500/30">
+                          <Lock className="w-3 h-3" /> PRO
+                        </span>
+                      </div>
+                    )}
+                    <div className="w-8 h-8 rounded-full border-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] bg-transparent flex-shrink-0" />
+                    <div className="flex flex-col text-left">
+                      <span className="text-sm font-bold text-white/90">Neon Rings</span>
+                      <span className="text-xs text-slate-400">Cyberpunk aesthetic</span>
+                    </div>
+                  </button>
+
+                  {/* Pixel Pets (Requires PRO) */}
+                  <button
+                    onClick={() => isProActive ? setPieceStyle('pixel_pets') : setIsProModalOpen(true)}
+                    className={`relative flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                      pieceStyle === 'pixel_pets' 
+                        ? 'border-emerald-500 bg-emerald-500/10' 
+                        : 'border-white/10 bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    {!isProActive && (
+                      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] rounded-xl flex items-center justify-end px-4 z-10 cursor-pointer">
+                        <span className="text-xs font-bold text-yellow-400 flex items-center gap-1 bg-yellow-500/20 px-2 py-1 rounded-md border border-yellow-500/30">
+                          <Lock className="w-3 h-3" /> PRO
+                        </span>
+                      </div>
+                    )}
+                    <div className="text-3xl flex-shrink-0 leading-none">🐶</div>
+                    <div className="flex flex-col text-left">
+                      <span className="text-sm font-bold text-white/90">Pixel Pets</span>
+                      <span className="text-xs text-slate-400">Cute emoji avatars</span>
+                    </div>
+                  </button>
+
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       )}

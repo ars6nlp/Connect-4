@@ -12,7 +12,7 @@ interface BoardProps {
 }
 
 export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme = 'classic' }) => {
-  const { selectedSkin } = usePro();
+  const { pieceStyle } = usePro();
   const isPixel = theme === 'pixel';
   const isMatrix = theme === 'matrix';
   const isFastFood = theme === 'fastfood';
@@ -30,8 +30,11 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
   // For the piece, we return the class string depending on player
   const getPieceClass = (player: Player) => {
     if (player === 'red') {
-      if (selectedSkin === 'pixel_pets') {
+      if (pieceStyle === 'pixel_pets') {
         return 'bg-[url("https://fav.farm/🐶")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none';
+      }
+      if (pieceStyle === 'neon') {
+        return 'bg-transparent border-[6px] border-rose-500 rounded-full shadow-[0_0_15px_#f43f5e,inset_0_0_15px_#f43f5e] animate-pulse';
       }
       return isPixel ? 'bg-red-500 rounded-none border-4 border-red-800' :
              isFastFood ? 'bg-[url("https://fav.farm/🍔")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none' :
@@ -39,8 +42,11 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
              'bg-gradient-to-br from-rose-500 to-red-600 rounded-full shadow-[inset_0_8px_12px_rgba(255,255,255,0.6),_inset_0_-10px_20px_rgba(0,0,0,0.6),_0_6px_15px_rgba(225,29,72,0.5)] border border-rose-400/60 backdrop-blur-md relative overflow-hidden after:content-[\'\'] after:absolute after:top-[5%] after:left-[15%] after:w-[70%] after:h-[35%] after:bg-gradient-to-b after:from-white/50 after:to-transparent after:rounded-full';
     }
     if (player === 'yellow') {
-      if (selectedSkin === 'pixel_pets') {
+      if (pieceStyle === 'pixel_pets') {
         return 'bg-[url("https://fav.farm/🐱")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none';
+      }
+      if (pieceStyle === 'neon') {
+        return 'bg-transparent border-[6px] border-yellow-400 rounded-full shadow-[0_0_15px_#facc15,inset_0_0_15px_#facc15] animate-pulse';
       }
       return isPixel ? 'bg-yellow-400 rounded-none border-4 border-yellow-700' :
              isFastFood ? 'bg-[url("https://fav.farm/🍟")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none' :

@@ -8,13 +8,13 @@ import { Globe, User, Clock, AlertCircle, Copy, Check, Trophy, Zap, Palette } fr
 import { usePro } from '@/context/ProContext';
 import Link from 'next/link';
 import confetti from 'canvas-confetti';
-import { ChatBox } from './ChatBox';
+import { GameChat } from './GameChat';
 
 const EMOJIS = ['😂', '🤔', '🤯', '🥱'];
 
 export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: string }> }) {
   const { matchId } = React.use(params);
-  const { isPro, selectedSkin, setSelectedSkin } = usePro();
+  const { isPro } = usePro();
   const { match, userId, isPlayer1, error, sendMove, broadcastTaunt, incomingTaunt, broadcastChat, incomingChat } = useOnlineMatch(matchId);
   const theme = useCheatCodes();
   const [copied, setCopied] = useState(false);
@@ -211,19 +211,9 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
           </div>
         )}
 
-        {/* Skin Select for PRO users */}
-        {isPro && !winner && (
-          <button
-            onClick={() => setSelectedSkin(selectedSkin === 'standard' ? 'pixel_pets' : 'standard')}
-            className="w-full py-3 bg-gradient-to-br from-yellow-400/20 to-amber-600/20 hover:from-yellow-400/30 hover:to-amber-600/30 border border-yellow-500/30 text-yellow-400 font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]"
-          >
-            <Palette className="w-5 h-5 drop-shadow-md" /> Skin Select
-          </button>
-        )}
-
         {/* Real-time Chat Box */}
         {match.player2_id && !winner && (
-          <ChatBox 
+          <GameChat 
             incomingChat={incomingChat} 
             broadcastChat={broadcastChat} 
             myPlayer={isPlayer1 ? 'red' : 'yellow'} 

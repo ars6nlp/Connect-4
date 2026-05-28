@@ -33,4 +33,42 @@
     background-size: 400% 400%;
     animation: mesh-gradient 15s ease infinite;
   }
+
+  body.theme-midnight {
+    background: #000000 !important;
+    animation: none !important;
+  }
+
+  body.theme-cyberpunk {
+    background: linear-gradient(135deg, #12002b, #2a0845, #35014c) !important;
+    animation: none !important;
+  }
+
+  body.theme-minimalist {
+    background: #f1f5f9 !important;
+    animation: none !important;
+  }
+  
+  /* Minimalist Theme Overrides */
+  body.theme-minimalist * {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  body.theme-minimalist .text-white,
+  body.theme-minimalist .text-white\/90,
+  body.theme-minimalist .text-white\/80,
+  body.theme-minimalist .text-white\/60,
+  body.theme-minimalist .text-white\/50,
+  body.theme-minimalist .text-white\/40,
+  body.theme-minimalist .text-white\/30 {
+    color: #0f172a !important;
+  }
+  body.theme-minimalist .bg-white\/5 {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  body.theme-minimalist .bg-white\/10 {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  body.theme-minimalist .bg-white\/20 {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+  }
 }

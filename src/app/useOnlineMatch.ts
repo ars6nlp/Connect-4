@@ -150,12 +150,12 @@ export function useOnlineMatch(matchId: string | null) {
     }
   }, []);
 
-  const broadcastChat = useCallback((player: Player, text: string) => {
+  const broadcastChat = useCallback((player: Player, text: string, timestamp?: string) => {
     if (channelRef.current) {
       channelRef.current.send({
         type: 'broadcast',
         event: 'chat',
-        payload: { player, text },
+        payload: { player, text, timestamp },
       });
     }
   }, []);

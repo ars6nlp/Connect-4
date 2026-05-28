@@ -15,7 +15,7 @@ import { supabase } from '@/lib/supabase';
 const EMOJIS = ['😂', '🤔', '🤯', '🥱'];
 
 export default function Home() {
-  const { isPro, selectedSkin, setSelectedSkin } = usePro();
+  const { isPro } = usePro();
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedMode, setSelectedMode] = useState<GameMode>('ai');
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('medium');
@@ -300,23 +300,13 @@ export default function Home() {
           ))}
 
           {!winner && (
-            <div className="col-span-4 flex gap-2 mt-2">
-              <button 
-                onClick={getHint}
-                disabled={isAiThinking || currentPlayer !== 'red'}
-                className="flex-1 py-3 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/5 disabled:opacity-50 text-white/90 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]"
-              >
-                <Lightbulb className="w-5 h-5 text-amber-300 drop-shadow-md" /> Get Hint
-              </button>
-              {isPro && (
-                <button
-                  onClick={() => setSelectedSkin(selectedSkin === 'standard' ? 'pixel_pets' : 'standard')}
-                  className="flex-1 py-3 bg-gradient-to-br from-yellow-400/20 to-amber-600/20 hover:from-yellow-400/30 hover:to-amber-600/30 border border-yellow-500/30 text-yellow-400 font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(251,191,36,0.1)] active:scale-[0.98]"
-                >
-                  <Palette className="w-5 h-5 drop-shadow-md" /> Skin Select
-                </button>
-              )}
-            </div>
+            <button 
+              onClick={getHint}
+              disabled={isAiThinking || currentPlayer !== 'red'}
+              className="col-span-4 py-3 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/5 disabled:opacity-50 text-white/90 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98] mt-2"
+            >
+              <Lightbulb className="w-5 h-5 text-amber-300 drop-shadow-md" /> Get Hint
+            </button>
           )}
 
           {winner && (
