@@ -70,7 +70,7 @@ export default function Home() {
   /* ─── LOBBY SCREEN ─── */
   if (!isPlaying) {
     return (
-      <div className="min-h-full p-4 md:p-8 flex flex-col items-center justify-center bg-[#0a0a0a]">
+      <div className="min-h-full p-4 md:p-8 flex flex-col items-center justify-center bg-transparent">
         <div className="max-w-md w-full space-y-3 border border-white/8 bg-white/[0.03] rounded-2xl p-6 md:p-8">
           
           <div className="mb-6">
@@ -175,7 +175,7 @@ export default function Home() {
 
   /* ─── GAME SCREEN ─── */
   return (
-    <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-center p-4 pt-12 md:pt-6 lg:pt-8 pb-8 gap-6 w-full bg-[#0a0a0a] ${theme === 'matrix' ? '!bg-black text-green-500' : ''}`}>
+    <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-center p-4 pt-12 md:pt-6 lg:pt-8 pb-8 gap-6 w-full bg-transparent ${theme === 'matrix' ? '!bg-black text-green-500' : ''}`}>
       
       {/* Resign (mobile) */}
       <div className="w-full max-w-3xl flex justify-start lg:hidden mb-2">

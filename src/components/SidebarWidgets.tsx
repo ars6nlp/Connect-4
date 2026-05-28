@@ -1,17 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Crown, Users, ChevronRight, Settings, X, Image as ImageIcon, Sparkles, Lock, Check } from 'lucide-react';
-import { usePro, AppTheme, PieceStyle } from '@/context/ProContext';
+import React, { useState, useEffect } from 'react';
+import { Crown, Users, ChevronRight, Settings } from 'lucide-react';
+import { usePro } from '@/context/ProContext';
 import Link from 'next/link';
 
 export function SidebarWidgets({ isMobile = false }: { isMobile?: boolean }) {
   const {
-    isPro: isProActive,
-    appTheme, setAppTheme,
-    pieceStyle, setPieceStyle,
+    isPro: isProContext,
     isSettingsOpen, setIsSettingsOpen,
   } = usePro();
+
+  // Double-check localStorage on client side to avoid flash of wrong state
+  const [isDemo, setIsDemo] = useState(false);
+  useEffect(() => {
+    setIsDemo(localStorage.getItem('is_pro_demo') === 'true');
+  }, []);
+
+  const isProActive = isProContext || isDemo;
 
   return (
     <>

@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} antialiased bg-black text-white w-full`}>
+      <body className={`${inter.className} antialiased text-white w-full`}>
         <ProProvider>
           {children}
           <SettingsModal />
