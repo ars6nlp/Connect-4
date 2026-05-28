@@ -71,28 +71,59 @@ export function SettingsModal() {
               <ImageIcon className="w-4 h-4" /> Background Theme
             </h3>
             <div className="grid grid-cols-2 gap-3">
-              {themes.map((t) => (
-                <button
-                  key={t.id}
-                  type="button"
-                  onClick={() => setAppTheme(t.id)}
-                  className={`relative p-3 rounded-xl border flex flex-col items-center gap-2 transition-all cursor-pointer ${
-                    appTheme === t.id
-                      ? 'border-white bg-white/10'
-                      : 'border-white/10 bg-white/5 hover:bg-white/10'
-                  }`}
-                >
-                  <div className={`w-full h-12 rounded-lg border border-white/10 ${t.bg}`} />
-                  <span className={`text-xs font-bold ${appTheme === t.id ? 'text-white' : 'text-zinc-400'}`}>
-                    {t.label}
-                  </span>
-                  {appTheme === t.id && (
-                    <div className="absolute top-2 right-2 w-4 h-4 bg-white rounded-full flex items-center justify-center">
-                      <Check className="w-3 h-3 text-black" />
-                    </div>
-                  )}
-                </button>
-              ))}
+              {/* Deep Slate — free */}
+              <button
+                type="button"
+                onClick={() => setAppTheme('deep_slate')}
+                className={`relative p-3 rounded-xl border flex flex-col items-center gap-2 transition-all cursor-pointer ${
+                  appTheme === 'deep_slate'
+                    ? 'border-white bg-white/10'
+                    : 'border-white/10 bg-white/5 hover:bg-white/10'
+                }`}
+              >
+                <div className="w-full h-12 rounded-lg border border-white/10 bg-gradient-to-br from-slate-900 to-slate-800" />
+                <span className={`text-xs font-bold ${appTheme === 'deep_slate' ? 'text-white' : 'text-zinc-400'}`}>
+                  Deep Slate
+                </span>
+                {appTheme === 'deep_slate' && (
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-white rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-black" />
+                  </div>
+                )}
+              </button>
+
+              {/* Midnight — PRO */}
+              <ProStyleButton
+                label="Midnight"
+                desc="Pure OLED Black"
+                isActive={appTheme === 'midnight'}
+                isPro={isProActive}
+                email={userEmail}
+                onSelect={() => setAppTheme('midnight')}
+                preview={<div className="w-8 h-8 rounded-lg border border-white/20 bg-black shrink-0" />}
+              />
+
+              {/* Cyberpunk — PRO */}
+              <ProStyleButton
+                label="Cyberpunk"
+                desc="Neon vibes"
+                isActive={appTheme === 'cyberpunk'}
+                isPro={isProActive}
+                email={userEmail}
+                onSelect={() => setAppTheme('cyberpunk')}
+                preview={<div className="w-8 h-8 rounded-lg border border-white/20 bg-gradient-to-br from-[#12002b] to-[#35014c] shrink-0" />}
+              />
+
+              {/* Minimalist — PRO */}
+              <ProStyleButton
+                label="Minimalist"
+                desc="Clean white"
+                isActive={appTheme === 'minimalist'}
+                isPro={isProActive}
+                email={userEmail}
+                onSelect={() => setAppTheme('minimalist')}
+                preview={<div className="w-8 h-8 rounded-lg border border-zinc-300 bg-zinc-100 shrink-0" />}
+              />
             </div>
           </section>
 
