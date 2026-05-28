@@ -24,7 +24,7 @@ export default function RootLayout({
         <aside className="fixed bottom-0 left-0 right-0 h-16 md:relative md:h-auto md:w-64 flex flex-row md:flex-col items-center md:items-stretch bg-white/5 backdrop-blur-2xl border-t md:border-t-0 md:border-r border-white/10 py-0 md:py-6 z-50 shadow-[0_-8px_32px_rgba(0,0,0,0.3)] md:shadow-[8px_0_32px_rgba(0,0,0,0.3)] transition-all">
           <div className="hidden md:flex items-center justify-center md:justify-start gap-3 px-0 md:px-4 mb-10">
             <Link href="/" className="text-xl md:text-2xl font-black text-white hover:text-gray-300 transition-colors flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 shadow-[inset_0_-2px_6px_rgba(0,0,0,0.4),_0_2px_8px_rgba(99,102,241,0.5)] border border-blue-300/30 flex items-center justify-center text-white font-black">4</div>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-rose-500 to-amber-400 shadow-[inset_0_-2px_6px_rgba(0,0,0,0.4),_0_2px_8px_rgba(244,63,94,0.5)] border border-rose-300/30 flex items-center justify-center text-white font-black">4</div>
               <span className="hidden md:block">Connect</span>
             </Link>
           </div>

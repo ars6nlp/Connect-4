@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useConnectFour, GameMode } from './useConnectFour';
+import { useConnectFour, GameMode, Player } from './useConnectFour';
 import { Board } from './Board';
 import { Difficulty } from '@/lib/ai';
-import { Bot, User, Globe, Trophy, Lightbulb, Zap, Clock } from 'lucide-react';
+import { Bot, User, Globe, Trophy, Lightbulb, Zap, Clock, ArrowLeft, Play } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useCheatCodes } from './useCheatCodes';
 import { useRouter } from 'next/navigation';
@@ -304,26 +304,21 @@ export default function Home() {
 
           {winner && (
             <div className="col-span-4 flex gap-3">
-            <button 
-              onClick={handlePlayOnline}
-              disabled={isCreatingMatch}
-              className="flex-1 py-4 bg-white/5 backdrop-blur-md hover:bg-white/5 text-white/90 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-white/10 shadow-lg relative overflow-hidden group disabled:opacity-50 active:scale-[0.98]"
-            >
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 group-hover:opacity-10 transition-opacity"></div>
-              {isCreatingMatch ? <Clock className="w-6 h-6 animate-pulse" /> : <Globe className="w-6 h-6 text-blue-300" />}
-              <span className="drop-shadow-sm">{isCreatingMatch ? 'Connecting...' : 'Play Online'}</span>
-            </button>
-            <button 
-              onClick={() => {
-                setSelectedMode('pass_and_play');
-                resetGame();
-              }}
-              className="flex-1 py-4 bg-white/5 backdrop-blur-md hover:bg-white/5 text-white/90 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-white/10 shadow-lg active:scale-[0.98]"
-            >
-              <User className="w-6 h-6 text-amber-300" />
-              <span className="drop-shadow-sm">Pass & Play</span>
-            </button>
-          </div>
+              <button 
+                onClick={resetGame}
+                className="flex-1 py-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-emerald-500/30 shadow-lg active:scale-[0.98]"
+              >
+                <Play className="w-6 h-6" />
+                <span className="drop-shadow-sm">Play Again</span>
+              </button>
+              <button 
+                onClick={quitGame}
+                className="flex-1 py-4 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white/90 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-white/10 shadow-lg active:scale-[0.98]"
+              >
+                <ArrowLeft className="w-6 h-6 text-white/50" />
+                <span className="drop-shadow-sm">Main Menu</span>
+              </button>
+            </div>
           )}
         </div>
       </div>
