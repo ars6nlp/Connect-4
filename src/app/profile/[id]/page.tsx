@@ -21,14 +21,15 @@ interface MatchRecord {
   opponent_username?: string;
 }
 
-export default function FriendProfilePage({ params }: { params: { id: string } }) {
+export default function FriendProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [matchHistory, setMatchHistory] = useState<MatchRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadProfile() {
-      const decodedId = decodeURIComponent(params.id);
+      const decodedId = decodeURIComponent(id);
       
       // Mock data for hardcoded friends from Sidebar
       if (decodedId === 'Bakhitbek' || decodedId === 'Aybatyr') {
@@ -85,7 +86,7 @@ export default function FriendProfilePage({ params }: { params: { id: string } }
     }
     
     loadProfile();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (
