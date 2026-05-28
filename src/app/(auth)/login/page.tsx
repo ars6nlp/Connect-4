@@ -32,18 +32,12 @@ export default function LoginPage() {
       console.log("5. Login success, session:", data.session?.user?.email);
       console.log("6. Redirecting to dashboard...");
       
-      // Use Next.js router.push combined with router.refresh() to ensure reactivity
-      // without doing a full browser page reload
       router.push('/dashboard');
       router.refresh();
       
     } catch (err: any) {
       console.error('7. Catch block - Login Error:', err);
-      alert('Login Error: ' + (err.message || 'Unknown error'));
       setError(err.message || 'An error occurred during login.');
-      setLoading(false);
-    } finally {
-      console.log("8. Finally block executing");
       setLoading(false);
     }
   };

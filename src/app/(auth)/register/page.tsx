@@ -36,21 +36,20 @@ export default function RegisterPage() {
       }
       
       console.log("5. Register success, user:", data.user?.email);
-      console.log("6. Redirecting to dashboard...");
       
-      // Auto-login successful or bypassed email confirmation
-      // Use Next.js router.push combined with router.refresh() to ensure reactivity
-      // without doing a full browser page reload
-      router.push('/dashboard');
-      router.refresh();
+      if (data.session) {
+        console.log("6. Auto-login successful, redirecting to dashboard...");
+        router.push('/dashboard');
+        router.refresh();
+      } else {
+        console.log("6. Email confirmation required, showing success state.");
+        setSuccess(true);
+        setLoading(false);
+      }
       
     } catch (err: any) {
       console.error('7. Catch block - Registration Error:', err);
-      alert('Registration Error: ' + (err.message || 'Unknown error'));
       setError(err.message || 'An error occurred during registration.');
-      setLoading(false);
-    } finally {
-      console.log("8. Finally block executing");
       setLoading(false);
     }
   };

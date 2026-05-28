@@ -87,6 +87,7 @@ export function useOnlineMatch(matchId: string | null) {
   useEffect(() => {
     if (!matchId) return;
 
+    console.log(`[Realtime] Initializing channel for match:${matchId}`);
     const channel = supabase
       .channel(`match:${matchId}`, {
         config: {
@@ -97,6 +98,7 @@ export function useOnlineMatch(matchId: string | null) {
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'matches', filter: `id=eq.${matchId}` },
         (payload) => {
+          console.log('[Realtime] Match state updated:', payload.new);
           setMatch(payload.new as OnlineMatch);
         }
       )
@@ -104,6 +106,7 @@ export function useOnlineMatch(matchId: string | null) {
         'broadcast',
         { event: 'taunt' },
         (payload) => {
+          console.log('[Realtime] Taunt received:', payload.payload);
           setIncomingTaunt({
             player: payload.payload.player as Player,
             emoji: payload.payload.emoji as string,
@@ -115,6 +118,7 @@ export function useOnlineMatch(matchId: string | null) {
         'broadcast',
         { event: 'chat-message' },
         (payload) => {
+          console.log('[Realtime] Chat message received:', payload.payload);
           setIncomingChat({
             sender: payload.payload.sender as string,
             text: payload.payload.text as string,
@@ -122,11 +126,17 @@ export function useOnlineMatch(matchId: string | null) {
           });
         }
       )
-      .subscribe();
+      .subscribe((status, err) => {
+        console.log(`[Realtime] Channel subscription status: ${status}`);
+        if (err) {
+          console.error('[Realtime] Channel error:', err);
+        }
+      });
 
     channelRef.current = channel;
 
     return () => {
+      console.log(`[Realtime] Removing channel for match:${matchId}`);
       supabase.removeChannel(channel);
       channelRef.current = null;
     };
@@ -165,9 +175,9 @@ export function useOnlineMatch(matchId: string | null) {
 
 export async function createOnlineMatch(userId: string): Promise<string | null> {
   // Ensure profile exists first (since it's a foreign key)
-  const { data: existingProfile } = await supabase.from('profiles').select('id').eq('id', userId).single();
+  const { data: existingProfile, error: profileFetchError } = await supabase.from('profiles').select('*').eq('id', userId).single();
   
-  if (!existingProfile) {
+  if (!existingProfile || profileFetchError) {
     const { error: profileError } = await supabase.from('profiles').upsert(
       { 
         id: userId, 
@@ -181,6 +191,19 @@ export async function createOnlineMatch(userId: string): Promise<string | null> 
     );
     if (profileError) {
       console.error("Error inserting profile:", profileError.message, profileError.details);
+    }
+  } else {
+    // Fallback protection for new users whose rating, wins, and losses are NULL
+    const needsUpdate = existingProfile.elo_rating === null || existingProfile.wins === null || existingProfile.losses === null;
+    if (needsUpdate) {
+      const { error: updateError } = await supabase.from('profiles').update({
+        elo_rating: existingProfile.elo_rating || 1400,
+        wins: existingProfile.wins || 0,
+        losses: existingProfile.losses || 0
+      }).eq('id', userId);
+      if (updateError) {
+        console.error("Error updating profile nulls:", updateError.message);
+      }
     }
   }
 
