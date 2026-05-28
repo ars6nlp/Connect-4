@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} antialiased flex h-[100dvh] overflow-hidden bg-[#0f172a]`}>
+      <body className={`${inter.className} antialiased flex h-[100dvh] w-full overflow-hidden bg-black`}>
         <ProProvider>
           {children}
         </ProProvider>

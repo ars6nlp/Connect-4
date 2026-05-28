@@ -3,7 +3,7 @@ import { Play, Trophy, ShieldCheck, Globe } from 'lucide-react';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center relative overflow-hidden">
+    <div className="min-h-screen w-full bg-black text-white flex flex-col items-center relative overflow-hidden">
       
       {/* Background Decor - Subtle Grid */}
       <div className="absolute inset-0 opacity-[0.03]"
