@@ -111,9 +111,9 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
   }
 
   return (
-    <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-center p-4 py-8 gap-8 relative overflow-hidden transition-colors duration-1000 ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
+    <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-center p-4 py-8 gap-8 relative transition-colors duration-1000 w-full ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
       
-      <Link href="/" className="absolute top-4 left-4 text-white/50 hover:text-white/90 text-sm font-medium z-10 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md transition-colors shadow-lg flex items-center gap-2">
+      <Link href="/" className="absolute top-4 left-4 text-white/50 hover:text-white/90 text-sm font-bold z-10 bg-white/5 hover:bg-white/10 px-4 py-3 min-h-[48px] rounded-full border border-white/10 backdrop-blur-md transition-colors shadow-lg flex items-center gap-2">
         &larr; Leave Match
       </Link>
 
@@ -194,7 +194,7 @@ export default function OnlinePlayPage({ params }: { params: Promise<{ matchId: 
                 <button 
                   key={emoji}
                   onClick={() => handleSendTaunt(emoji)}
-                  className="w-10 h-10 flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/20 rounded-xl text-xl transition-all hover:scale-110 active:scale-95 shadow-md"
+                  className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/20 rounded-xl text-xl md:text-2xl transition-all hover:scale-110 active:scale-95 shadow-md min-w-[48px] min-h-[48px]"
                 >
                   {emoji}
                 </button>

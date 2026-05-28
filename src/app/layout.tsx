@@ -20,35 +20,35 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className} antialiased flex h-screen overflow-hidden`}>
         
-        {/* Sidebar */}
-        <aside className="w-16 md:w-64 flex flex-col items-center md:items-stretch bg-white/5 backdrop-blur-2xl border-r border-white/10 py-6 z-20 shadow-[8px_0_32px_rgba(0,0,0,0.3)] transition-all">
-          <div className="flex items-center justify-center md:justify-start gap-3 px-0 md:px-4 mb-10">
+        {/* Navigation Sidebar (Desktop) / Bottom Bar (Mobile) */}
+        <aside className="fixed bottom-0 left-0 right-0 h-16 md:relative md:h-auto md:w-64 flex flex-row md:flex-col items-center md:items-stretch bg-white/5 backdrop-blur-2xl border-t md:border-t-0 md:border-r border-white/10 py-0 md:py-6 z-50 shadow-[0_-8px_32px_rgba(0,0,0,0.3)] md:shadow-[8px_0_32px_rgba(0,0,0,0.3)] transition-all">
+          <div className="hidden md:flex items-center justify-center md:justify-start gap-3 px-0 md:px-4 mb-10">
             <Link href="/" className="text-xl md:text-2xl font-black text-white hover:text-gray-300 transition-colors flex items-center gap-2">
               <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">4</div>
               <span className="hidden md:block">Connect</span>
             </Link>
           </div>
           
-          <nav className="flex-1 w-full space-y-1">
-            <Link href="/" className="flex items-center gap-3 px-0 md:px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
-              <Play className="w-6 h-6 group-hover:scale-110 transition-transform text-pink-400" />
-              <span className="hidden md:block font-bold">Play</span>
+          <nav className="flex-1 w-full flex flex-row md:flex-col items-center justify-around md:justify-start md:space-y-1 px-2 md:px-0 h-full">
+            <Link href="/" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
+              <Play className="w-6 h-6 md:w-6 md:h-6 group-hover:scale-110 transition-transform text-pink-400" />
+              <span className="text-[10px] md:text-base font-bold">Play</span>
             </Link>
-            <Link href="/leaderboard" className="flex items-center gap-3 px-0 md:px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
-              <Trophy className="w-6 h-6 group-hover:scale-110 transition-transform text-yellow-400" />
-              <span className="hidden md:block font-bold">Leaderboard</span>
+            <Link href="/leaderboard" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
+              <Trophy className="w-6 h-6 md:w-6 md:h-6 group-hover:scale-110 transition-transform text-yellow-400" />
+              <span className="text-[10px] md:text-base font-bold">Ranks</span>
             </Link>
-            <Link href="/history" className="flex items-center gap-3 px-0 md:px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
-              <History className="w-6 h-6 group-hover:scale-110 transition-transform text-blue-400" />
-              <span className="hidden md:block font-bold">History</span>
+            <Link href="/history" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
+              <History className="w-6 h-6 md:w-6 md:h-6 group-hover:scale-110 transition-transform text-blue-400" />
+              <span className="text-[10px] md:text-base font-bold">History</span>
             </Link>
-            <Link href="/pro" className="flex items-center gap-3 px-0 md:px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group mt-4">
-              <Star className="w-6 h-6 text-yellow-500 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
-              <span className="hidden md:block font-bold">Premium</span>
+            <Link href="/pro" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group md:mt-4">
+              <Star className="w-6 h-6 md:w-6 md:h-6 text-yellow-500 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+              <span className="text-[10px] md:text-base font-bold">Pro</span>
             </Link>
           </nav>
 
-          <div className="mt-auto px-0 md:px-4 pb-4 flex justify-center md:justify-start">
+          <div className="hidden md:flex mt-auto px-0 md:px-4 pb-4 justify-center md:justify-start">
             <div className="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center font-bold text-white cursor-pointer hover:bg-white/20 transition-colors shadow-lg">
               G
             </div>
@@ -56,7 +56,7 @@ export default function RootLayout({
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 flex flex-col h-full overflow-y-auto relative z-10">
+        <main className="flex-1 flex flex-col h-full overflow-y-auto relative z-10 pb-16 md:pb-0">
           {children}
         </main>
 

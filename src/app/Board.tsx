@@ -43,9 +43,9 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
   };
 
   return (
-    <div className={`p-3 md:p-5 flex flex-col gap-1.5 md:gap-2.5 inline-block transition-all duration-500 ${boardBg}`}>
+    <div className={`w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto p-2 sm:p-3 md:p-5 flex flex-col gap-1 sm:gap-1.5 md:gap-2.5 transition-all duration-500 rounded-3xl ${boardBg}`}>
       {board.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex gap-1.5 md:gap-2.5">
+        <div key={rowIndex} className="grid grid-cols-7 gap-1 sm:gap-1.5 md:gap-2.5">
           {row.map((cell, colIndex) => {
             const isHint = hintCol === colIndex && rowIndex === 0;
             
@@ -53,9 +53,9 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`
-                  w-12 h-12 md:w-16 md:h-16 flex items-center justify-center cursor-pointer overflow-hidden relative transition-colors duration-300
+                  w-full aspect-square flex items-center justify-center cursor-pointer overflow-hidden relative transition-colors duration-300
                   ${cellBg}
-                  ${isHint ? 'ring-4 ring-[#f6b43f] animate-pulse' : ''}
+                  ${isHint ? 'ring-2 sm:ring-4 ring-[#f6b43f] animate-pulse' : ''}
                 `}
                 onClick={() => onDropPiece(colIndex)}
               >
@@ -65,10 +65,10 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
                 
                 <div 
                   className={`
-                    w-10 h-10 md:w-14 md:h-14 transition-all duration-300 transform
+                    w-[85%] h-[85%] transition-all duration-300 transform
                     ${cell.player ? 'animate-drop-bounce opacity-100' : ''}
                     ${getPieceClass(cell.player)}
-                    ${cell.isWinningCell ? (isMatrix ? 'ring-2 ring-white shadow-[0_0_10px_white]' : 'ring-4 ring-[#ffffff] animate-pulse z-10') : ''}
+                    ${cell.isWinningCell ? (isMatrix ? 'ring-2 ring-white shadow-[0_0_10px_white]' : 'ring-2 sm:ring-4 ring-[#ffffff] animate-pulse z-10') : ''}
                   `}
                 />
               </div>
