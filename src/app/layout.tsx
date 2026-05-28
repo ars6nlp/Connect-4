@@ -24,7 +24,7 @@ export default function RootLayout({
         <aside className="fixed bottom-0 left-0 right-0 h-16 md:relative md:h-auto md:w-64 flex flex-row md:flex-col items-center md:items-stretch bg-white/5 backdrop-blur-2xl border-t md:border-t-0 md:border-r border-white/10 py-0 md:py-6 z-50 shadow-[0_-8px_32px_rgba(0,0,0,0.3)] md:shadow-[8px_0_32px_rgba(0,0,0,0.3)] transition-all">
           <div className="hidden md:flex items-center justify-center md:justify-start gap-3 px-0 md:px-4 mb-10">
             <Link href="/" className="text-xl md:text-2xl font-black text-white hover:text-gray-300 transition-colors flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">4</div>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 shadow-[inset_0_-2px_6px_rgba(0,0,0,0.4),_0_2px_8px_rgba(99,102,241,0.5)] border border-blue-300/30 flex items-center justify-center text-white font-black">4</div>
               <span className="hidden md:block">Connect</span>
             </Link>
           </div>
@@ -42,18 +42,11 @@ export default function RootLayout({
               <History className="w-6 h-6 md:w-6 md:h-6 group-hover:scale-110 transition-transform text-blue-400" />
               <span className="text-[10px] md:text-base font-bold">History</span>
             </Link>
-            <Link href="/login" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group md:mt-4">
+            <Link href="/login" className="flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-3 text-white/70 hover:bg-white/10 hover:text-white transition-colors justify-center md:justify-start group">
               <User className="w-6 h-6 md:w-6 md:h-6 text-emerald-400 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
               <span className="text-[10px] md:text-base font-bold">Profile</span>
             </Link>
           </nav>
-
-          {/* Desktop profile bottom link (optional, keeping it as link too) */}
-          <div className="hidden md:flex mt-auto px-0 md:px-4 pb-4 justify-center md:justify-start">
-            <Link href="/login" className="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center font-bold text-white cursor-pointer hover:bg-white/20 transition-colors shadow-lg">
-              <User className="w-5 h-5 text-white/90" />
-            </Link>
-          </div>
         </aside>
 
         {/* Main Content Area */}
