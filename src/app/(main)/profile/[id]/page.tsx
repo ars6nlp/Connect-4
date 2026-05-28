@@ -100,7 +100,7 @@ export default function FriendProfilePage({ params }: { params: Promise<{ id: st
     return (
       <div className="min-h-full flex flex-col items-center justify-center p-4 gap-4 text-white">
         <div className="text-2xl font-bold">Profile not found</div>
-        <Link href="/" className="px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20">Return Home</Link>
+        <Link href="/friends" className="px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20">Back to Friends</Link>
       </div>
     );
   }
@@ -115,8 +115,8 @@ export default function FriendProfilePage({ params }: { params: Promise<{ id: st
 
       <div className="w-full max-w-2xl bg-white/5 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.6)] relative z-10 flex flex-col gap-8">
         
-        <Link href="/" className="self-start px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-white/50 hover:text-white/90 text-sm font-bold transition-colors flex items-center gap-2 border border-white/10">
-          <ArrowLeft className="w-4 h-4" /> Back
+        <Link href="/friends" className="self-start px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-white/50 hover:text-white/90 text-sm font-bold transition-colors flex items-center gap-2 border border-white/10">
+          <ArrowLeft className="w-4 h-4" /> Back to Friends
         </Link>
 
         {/* Header */}
