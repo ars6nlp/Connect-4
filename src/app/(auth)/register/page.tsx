@@ -18,28 +18,37 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Button clicked");
+    console.log("1. Register clicked, email:", email);
     setLoading(true);
     setError(null);
     try {
-      console.log("Calling supabase.auth.signUp with email:", email);
+      console.log("2. Sending auth signUp request...");
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: { data: { username } },
       });
       
-      if (error) throw error;
+      console.log("3. Auth response received");
+      if (error) {
+        console.log("4. Auth error:", error.message);
+        throw error;
+      }
+      
+      console.log("5. Register success, user:", data.user?.email);
+      console.log("6. Redirecting to dashboard...");
       
       // Auto-login successful or bypassed email confirmation
-      router.push('/dashboard');
-      router.refresh();
+      // Use window.location for hard redirect
+      window.location.href = '/dashboard';
       
     } catch (err: any) {
-      console.error('Registration Error:', err);
+      console.error('7. Catch block - Registration Error:', err);
       alert('Registration Error: ' + (err.message || 'Unknown error'));
       setError(err.message || 'An error occurred during registration.');
+      setLoading(false);
     } finally {
+      console.log("8. Finally block executing");
       setLoading(false);
     }
   };

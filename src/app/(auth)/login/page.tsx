@@ -16,20 +16,32 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login clicked, email:", email);
+    console.log("1. Login clicked, email:", email);
     setLoading(true);
     setError(null);
     try {
+      console.log("2. Sending auth request...");
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      console.log("Login success, session:", data.session?.user?.email);
-      router.push('/dashboard');
-      router.refresh();
+      
+      console.log("3. Auth response received");
+      if (error) {
+         console.log("4. Auth error:", error.message);
+         throw error;
+      }
+      
+      console.log("5. Login success, session:", data.session?.user?.email);
+      console.log("6. Redirecting to dashboard...");
+      
+      // Use window.location for a hard redirect to ensure auth state is cleanly loaded
+      window.location.href = '/dashboard';
+      
     } catch (err: any) {
-      console.error('Login Error:', err);
+      console.error('7. Catch block - Login Error:', err);
       alert('Login Error: ' + (err.message || 'Unknown error'));
       setError(err.message || 'An error occurred during login.');
+      setLoading(false);
     } finally {
+      console.log("8. Finally block executing");
       setLoading(false);
     }
   };
