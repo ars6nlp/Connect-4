@@ -8,7 +8,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-black">
       {/* Sidebar (desktop) / Bottom bar (mobile) */}
       <aside className="fixed bottom-0 left-0 right-0 h-16 md:relative md:h-auto md:w-60 flex flex-row md:flex-col items-center md:items-stretch bg-[#0d0d0d] border-t md:border-t-0 md:border-r border-white/8 py-0 md:py-6 z-50 shrink-0">
         
@@ -28,6 +28,6 @@ export default function MainLayout({
       <main className="flex-1 flex flex-col h-full overflow-y-auto relative z-10 pb-16 md:pb-0 bg-[#0a0a0a]">
         {children}
       </main>
-    </>
+    </div>
   );
 }

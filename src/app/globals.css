@@ -16,8 +16,8 @@
 
 @layer base {
   body {
-    @apply text-white antialiased overflow-hidden min-h-[100dvh];
-    background: #0a0a0a;
+    @apply text-white antialiased;
+    background: #000000;
   }
 
   /* Matrix cheat code override */
