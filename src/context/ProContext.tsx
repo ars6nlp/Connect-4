@@ -29,6 +29,13 @@ export function ProProvider({ children }: { children: ReactNode }) {
   const [pieceStyle, setPieceStyle] = useState<PieceStyle>('classic');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
+  // Check for jury demo mode on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && localStorage.getItem('is_pro_demo') === 'true') {
+      setIsPro(true);
+    }
+  }, []);
+
   // Load session + PRO status from Supabase on mount
   useEffect(() => {
     const loadSession = async () => {
@@ -44,7 +51,9 @@ export function ProProvider({ children }: { children: ReactNode }) {
           .eq('id', session.user.id)
           .single();
 
-        if (profile?.is_pro) setIsPro(true);
+        if (profile?.is_pro || (typeof window !== 'undefined' && localStorage.getItem('is_pro_demo') === 'true')) {
+          setIsPro(true);
+        }
       }
     };
 
@@ -60,11 +69,17 @@ export function ProProvider({ children }: { children: ReactNode }) {
           .select('is_pro')
           .eq('id', session.user.id)
           .single();
-        if (profile?.is_pro) setIsPro(true);
+        if (profile?.is_pro || (typeof window !== 'undefined' && localStorage.getItem('is_pro_demo') === 'true')) {
+          setIsPro(true);
+        }
       } else {
         setUserId(null);
         setUserEmail(null);
-        setIsPro(false);
+        if (typeof window !== 'undefined' && localStorage.getItem('is_pro_demo') === 'true') {
+          setIsPro(true);
+        } else {
+          setIsPro(false);
+        }
       }
     });
 

@@ -10,10 +10,24 @@ export function SettingsModal() {
     appTheme, setAppTheme,
     pieceStyle, setPieceStyle,
     isPro: isProActive,
+    setIsPro,
     userEmail,
   } = usePro();
 
+  const [clickCount, setClickCount] = useState(0);
+
   if (!isSettingsOpen) return null;
+
+  const handleTitleClick = () => {
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    if (newCount >= 10) {
+      localStorage.setItem('is_pro_demo', 'true');
+      setIsPro(true);
+      setClickCount(0);
+      alert('Jury Mode Activated: PRO features unlocked!');
+    }
+  };
 
   const themes: { id: AppTheme; label: string; bg: string }[] = [
     { id: 'deep_slate', label: 'Deep Slate', bg: 'bg-gradient-to-br from-slate-900 to-slate-800' },
@@ -34,7 +48,10 @@ export function SettingsModal() {
       >
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-white/10 shrink-0">
-          <div className="flex items-center gap-2">
+          <div 
+            className="flex items-center gap-2 cursor-pointer select-none" 
+            onClick={handleTitleClick}
+          >
             <Settings className="w-5 h-5 text-white/80" />
             <h2 className="text-lg font-bold text-white">Settings</h2>
           </div>
