@@ -12,6 +12,8 @@ interface AppContextType {
   setAppTheme: (theme: AppTheme) => void;
   pieceStyle: PieceStyle;
   setPieceStyle: (style: PieceStyle) => void;
+  isSettingsOpen: boolean;
+  setIsSettingsOpen: (value: boolean) => void;
 }
 
 const ProContext = createContext<AppContextType | undefined>(undefined);
@@ -20,6 +22,7 @@ export function ProProvider({ children }: { children: ReactNode }) {
   const [isPro, setIsPro] = useState(false);
   const [appTheme, setAppTheme] = useState<AppTheme>('deep_slate');
   const [pieceStyle, setPieceStyle] = useState<PieceStyle>('classic');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   useEffect(() => {
     // Remove all theme classes first
@@ -29,7 +32,7 @@ export function ProProvider({ children }: { children: ReactNode }) {
   }, [appTheme]);
 
   return (
-    <ProContext.Provider value={{ isPro, setIsPro, appTheme, setAppTheme, pieceStyle, setPieceStyle }}>
+    <ProContext.Provider value={{ isPro, setIsPro, appTheme, setAppTheme, pieceStyle, setPieceStyle, isSettingsOpen, setIsSettingsOpen }}>
       {children}
     </ProContext.Provider>
   );

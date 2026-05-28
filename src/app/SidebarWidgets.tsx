@@ -8,8 +8,7 @@ import Link from 'next/link';
 export function SidebarWidgets() {
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  const { isPro: isProActive, setIsPro: setIsProActive, appTheme, setAppTheme, pieceStyle, setPieceStyle } = usePro();
+  const { isPro: isProActive, setIsPro: setIsProActive, appTheme, setAppTheme, pieceStyle, setPieceStyle, isSettingsOpen, setIsSettingsOpen } = usePro();
   const [friendTag, setFriendTag] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -83,7 +82,7 @@ export function SidebarWidgets() {
 
         {/* Settings Button */}
         <button 
-          onClick={() => setIsSettingsModalOpen(true)}
+          onClick={() => setIsSettingsOpen(true)}
           className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-slate-400 hover:text-white"
         >
           <Settings className="w-5 h-5" />
@@ -209,7 +208,7 @@ export function SidebarWidgets() {
         </div>
       )}
       {/* --- SETTINGS MODAL --- */}
-      {isSettingsModalOpen && (
+      {isSettingsOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#1a1f2e] border border-white/10 rounded-2xl w-full max-w-md shadow-[0_24px_64px_rgba(0,0,0,0.6)] relative overflow-hidden flex flex-col max-h-[80vh]">
             
@@ -219,7 +218,7 @@ export function SidebarWidgets() {
                 <Settings className="w-5 h-5 text-white/80" />
                 <h2 className="text-lg font-bold text-white/90">Settings</h2>
               </div>
-              <button onClick={() => setIsSettingsModalOpen(false)} className="text-white/50 hover:text-white bg-white/5 hover:bg-white/10 p-1.5 rounded-lg transition-colors">
+              <button onClick={() => setIsSettingsOpen(false)} className="text-white/50 hover:text-white bg-white/5 hover:bg-white/10 p-1.5 rounded-lg transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>

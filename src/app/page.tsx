@@ -186,10 +186,10 @@ export default function Home() {
   }
 
   return (
-    <div className={`min-h-[100dvh] lg:min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] lg:pt-8 pb-8 gap-6 relative transition-colors duration-1000 w-full overflow-y-auto ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
+    <div className={`min-h-full flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-center p-4 pt-12 md:pt-6 lg:pt-8 pb-8 gap-6 relative transition-colors duration-1000 w-full ${theme === 'matrix' ? 'bg-black text-green-500' : ''}`}>
       
-      <div className="w-full max-w-3xl flex justify-start lg:hidden">
-        <button onClick={quitGame} className="text-white/50 hover:text-white/90 text-sm font-bold bg-white/5 hover:bg-white/10 px-4 py-3 min-h-[48px] rounded-full border border-white/10 backdrop-blur-md transition-colors shadow-lg flex items-center">
+      <div className="w-full max-w-3xl flex justify-start lg:hidden mb-2">
+        <button onClick={quitGame} className="text-white/70 hover:text-white/100 text-sm font-bold bg-white/10 hover:bg-white/20 px-5 py-3 rounded-full border border-white/20 backdrop-blur-md transition-colors shadow-lg flex items-center mt-safe">
           &larr; Resign
         </button>
       </div>

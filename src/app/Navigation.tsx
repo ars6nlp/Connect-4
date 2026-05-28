@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Play, Trophy, History, User } from 'lucide-react';
+import { Play, Trophy, History, User, Settings } from 'lucide-react';
+import { usePro } from '@/context/ProContext';
 
 export function Navigation() {
   const pathname = usePathname();
+  const { setIsSettingsOpen } = usePro();
 
   const links = [
     { href: '/', label: 'Play', icon: Play, iconColor: 'text-pink-400' },
@@ -39,6 +41,17 @@ export function Navigation() {
           </Link>
         );
       })}
+      
+      {/* Settings Button (Mobile Only) */}
+      <button 
+        onClick={() => setIsSettingsOpen(true)}
+        className="flex md:hidden flex-col items-center gap-1 px-2 py-1 transition-colors justify-center group text-white/70 hover:bg-white/5 hover:text-white rounded-2xl"
+      >
+        <Settings className="w-6 h-6 transition-transform group-hover:scale-110 text-slate-400" />
+        <span className="text-[10px] font-bold">
+          Settings
+        </span>
+      </button>
     </nav>
   );
 }
