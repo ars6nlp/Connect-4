@@ -31,13 +31,13 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
       return isPixel ? 'bg-red-500 rounded-none border-4 border-red-800' :
              isFastFood ? 'bg-[url("https://fav.farm/🍔")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none' :
              isMatrix ? 'bg-transparent text-green-500 flex items-center justify-center font-mono font-black text-3xl md:text-5xl after:content-["1"]' :
-             'bg-gradient-to-br from-rose-500 to-red-600 rounded-full shadow-[inset_0_-8px_16px_rgba(0,0,0,0.4),_inset_0_4px_8px_rgba(255,255,255,0.4),_0_4px_12px_rgba(225,29,72,0.5)] border border-rose-400/30 backdrop-blur-md';
+             'bg-gradient-to-br from-rose-500 to-red-600 rounded-full shadow-[inset_0_8px_12px_rgba(255,255,255,0.6),_inset_0_-10px_20px_rgba(0,0,0,0.6),_0_6px_15px_rgba(225,29,72,0.5)] border border-rose-400/60 backdrop-blur-md relative overflow-hidden after:content-[\'\'] after:absolute after:top-[5%] after:left-[15%] after:w-[70%] after:h-[35%] after:bg-gradient-to-b after:from-white/50 after:to-transparent after:rounded-full';
     }
     if (player === 'yellow') {
       return isPixel ? 'bg-yellow-400 rounded-none border-4 border-yellow-700' :
              isFastFood ? 'bg-[url("https://fav.farm/🍟")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none' :
              isMatrix ? 'bg-transparent text-green-300 flex items-center justify-center font-mono font-black text-3xl md:text-5xl after:content-["0"]' :
-             'bg-gradient-to-br from-amber-300 to-yellow-500 rounded-full shadow-[inset_0_-8px_16px_rgba(0,0,0,0.4),_inset_0_4px_8px_rgba(255,255,255,0.6),_0_4px_12px_rgba(245,158,11,0.5)] border border-yellow-200/50 backdrop-blur-md';
+             'bg-gradient-to-br from-amber-300 to-yellow-500 rounded-full shadow-[inset_0_8px_12px_rgba(255,255,255,0.6),_inset_0_-10px_20px_rgba(0,0,0,0.6),_0_6px_15px_rgba(245,158,11,0.5)] border border-yellow-200/60 backdrop-blur-md relative overflow-hidden after:content-[\'\'] after:absolute after:top-[5%] after:left-[15%] after:w-[70%] after:h-[35%] after:bg-gradient-to-b after:from-white/60 after:to-transparent after:rounded-full';
     }
     return 'bg-transparent -translate-y-[400%] opacity-0';
   };

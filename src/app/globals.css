@@ -1,12 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --animate-drop-bounce: drop-bounce 0.6s cubic-bezier(0.28, 0.84, 0.42, 1) forwards;
-  --keyframes-drop-bounce: {
-    "0%": { transform: "translateY(-400%) scale(0.9)", opacity: "0.5" },
-    "50%": { transform: "translateY(5%) scale(1)", opacity: "1" },
-    "75%": { transform: "translateY(-10%)" },
-    "90%": { transform: "translateY(2%)" },
+  --animate-drop-bounce: drop-bounce-heavy 0.7s forwards;
+  --keyframes-drop-bounce-heavy: {
+    "0%": { transform: "translateY(-100vh)", "animation-timing-function": "ease-in" },
+    "40%": { transform: "translateY(0)", "animation-timing-function": "ease-out" },
+    "65%": { transform: "translateY(-60px)", "animation-timing-function": "ease-in" },
+    "82%": { transform: "translateY(0)", "animation-timing-function": "ease-out" },
+    "92%": { transform: "translateY(-20px)", "animation-timing-function": "ease-in" },
+    "97%": { transform: "translateY(0)", "animation-timing-function": "ease-out" },
+    "99%": { transform: "translateY(-5px)", "animation-timing-function": "ease-in" },
     "100%": { transform: "translateY(0)" },
   };
   --animate-mesh-gradient: mesh-gradient 15s ease infinite;
