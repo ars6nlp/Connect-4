@@ -19,7 +19,7 @@
 
 ## ⚠️ IMPORTANT NOTES FOR THE JURY / EVALUATORS
 
-Thank you for reviewing our project! Due to the strict time constraints of the hackathon, please be aware of the following important notes to ensure a smooth evaluation process:
+Thank you for reviewing our project! Due to the strict time constraints, please be aware of the following important notes to ensure a smooth evaluation process:
 
 ### 1. 🔄 Known UI Sync Issue (Reactivity Drop)
 You might encounter a known state synchronization issue (loss of reactivity) during critical transitions. Specifically:
@@ -105,5 +105,5 @@ Follow these instructions to run the project locally on your machine.
 
 ---
 <div align="center">
-  <i>Built with ❤️ for the Hackathon</i>
+  <i>Built with ❤️</i>
 </div>
