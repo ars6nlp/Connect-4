@@ -176,8 +176,12 @@ export function useConnectFour(mode: GameMode = 'pass_and_play', difficulty: Dif
     }
   }, [mode, difficulty, gameState.winner, gameState.currentPlayer, sendTaunt]);
 
-  const dropPiece = useCallback((col: number) => {
+  const dropPiece = useCallback((col: number, isSystemMove: boolean = false) => {
     if (gameState.winner || col < 0 || col >= COLS) return;
+
+    // Prevent human from moving during AI's turn or while AI is thinking
+    if (!isSystemMove && mode === 'ai' && gameState.currentPlayer === 'yellow') return;
+    if (!isSystemMove && isAiThinking) return;
 
     // AI Check: Did player block a threat?
     if (mode === 'ai' && difficulty === 'hard' && gameState.currentPlayer === 'red') {
@@ -260,7 +264,7 @@ export function useConnectFour(mode: GameMode = 'pass_and_play', difficulty: Dif
       }, 0);
       const timer2 = setTimeout(() => {
         const aiCol = getBestMove(gameState.board, 'yellow', difficulty);
-        dropPiece(aiCol);
+        dropPiece(aiCol, true);
         setIsAiThinking(false);
       }, difficulty === 'hard' ? 100 : 500);
       return () => {
