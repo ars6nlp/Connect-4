@@ -18,9 +18,11 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Button clicked");
     setLoading(true);
     setError(null);
     try {
+      console.log("Calling supabase.auth.signUp with email:", email);
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
