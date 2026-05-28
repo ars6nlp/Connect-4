@@ -14,8 +14,10 @@ export function SidebarWidgets({ isMobile = false }: { isMobile?: boolean }) {
   // Double-check localStorage on client side to avoid flash of wrong state
   const [isDemo, setIsDemo] = useState(false);
   useEffect(() => {
-    setIsDemo(localStorage.getItem('is_pro_demo') === 'true');
-  }, []);
+    const demoFlag = localStorage.getItem('is_pro_demo') === 'true';
+    setIsDemo(demoFlag);
+    console.log('[DEBUG SidebarWidgets] isProContext:', isProContext, '| isDemo (localStorage):', demoFlag);
+  }, [isProContext]);
 
   const isProActive = isProContext || isDemo;
 
