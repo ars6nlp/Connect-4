@@ -20,7 +20,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { username } },
@@ -29,7 +29,14 @@ export default function RegisterPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      setSuccess(true);
+      if (data.session) {
+        // Auto-login successful (Email Confirmations are disabled)
+        router.push('/dashboard');
+        router.refresh();
+      } else {
+        // Needs email confirmation
+        setSuccess(true);
+      }
     }
   };
 

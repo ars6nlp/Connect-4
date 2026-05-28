@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ProProvider } from '@/context/ProContext';
+import { SettingsModal } from '@/components/SettingsModal';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased bg-black text-white w-full`}>
         <ProProvider>
           {children}
+          <SettingsModal />
         </ProProvider>
       </body>
     </html>
