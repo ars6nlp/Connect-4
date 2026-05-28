@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { Eye, EyeOff, Loader2, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -36,92 +36,110 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="w-full text-center">
-        <div className="bg-white/5 backdrop-blur-2xl border border-emerald-500/20 rounded-3xl p-10 shadow-[0_24px_64px_rgba(0,0,0,0.4)]">
-          <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto mb-6 drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
-          <h2 className="text-2xl font-black text-white mb-3">Check your email!</h2>
-          <p className="text-slate-400 mb-8">We sent a confirmation link to <strong className="text-white">{email}</strong>. Click it to activate your account.</p>
-          <Link href="/login" className="inline-block w-full py-3 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-all">
-            Back to Sign In
-          </Link>
+        <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mx-auto mb-6">
+          <CheckCircle2 className="w-8 h-8 text-white" />
         </div>
+        <h2 className="text-2xl font-black text-black mb-3">Check your inbox</h2>
+        <p className="text-zinc-500 text-sm mb-8 leading-relaxed">
+          We sent a confirmation link to<br />
+          <strong className="text-black">{email}</strong>
+        </p>
+        <Link
+          href="/login"
+          className="inline-block w-full py-3 bg-black text-white font-bold rounded-xl hover:bg-zinc-800 transition-all text-sm text-center"
+        >
+          Back to Sign In
+        </Link>
       </div>
     );
   }
 
   return (
     <div className="w-full">
-      {/* Logo */}
-      <div className="flex items-center justify-center gap-3 mb-10">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-orange-500 shadow-[0_4px_20px_rgba(225,29,72,0.5)] border border-red-400/30 flex items-center justify-center text-white font-black text-2xl">4</div>
-        <span className="text-3xl font-black text-white tracking-tight">Connect</span>
+      <div className="mb-10">
+        <h1 className="text-3xl font-black text-black tracking-tight mb-2">
+          Create account
+        </h1>
+        <p className="text-zinc-500 text-sm">
+          Join thousands of players. Free forever.
+        </p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-[0_24px_64px_rgba(0,0,0,0.4)]">
-        <h1 className="text-2xl font-black text-white mb-1">Create account</h1>
-        <p className="text-slate-400 text-sm mb-8">Join thousands of players worldwide</p>
+      {error && (
+        <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm font-medium flex items-start gap-2">
+          <span className="text-red-500 mt-0.5">⚠</span>
+          {error}
+        </div>
+      )}
 
-        {error && (
-          <div className="mb-6 bg-rose-500/10 border border-rose-500/30 rounded-xl p-3 text-rose-400 text-sm font-medium">
-            {error}
-          </div>
-        )}
+      <form onSubmit={handleRegister} className="flex flex-col gap-5">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
+            Username
+          </label>
+          <input
+            type="text"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            placeholder="CoolPlayer123"
+            required
+            className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-black placeholder:text-zinc-400 focus:outline-none focus:border-black focus:bg-white transition-all text-sm"
+          />
+        </div>
 
-        <form onSubmit={handleRegister} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Username</label>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
+            Email address
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            required
+            className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-black placeholder:text-zinc-400 focus:outline-none focus:border-black focus:bg-white transition-all text-sm"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
+            Password
+          </label>
+          <div className="relative">
             <input
-              type="text"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              placeholder="CoolPlayer123"
+              type={showPass ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="At least 8 characters"
               required
-              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/60 focus:bg-white/10 transition-all"
+              minLength={8}
+              className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-black placeholder:text-zinc-400 focus:outline-none focus:border-black focus:bg-white transition-all pr-12 text-sm"
             />
+            <button
+              type="button"
+              onClick={() => setShowPass(!showPass)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-black transition-colors p-1"
+            >
+              {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
           </div>
+        </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/60 focus:bg-white/10 transition-all"
-            />
-          </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-1 w-full py-3.5 bg-black hover:bg-zinc-800 text-white font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+        >
+          {loading
+            ? <Loader2 className="w-4 h-4 animate-spin" />
+            : <>Create Account <ArrowRight className="w-4 h-4" /></>
+          }
+        </button>
+      </form>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
-            <div className="relative">
-              <input
-                type={showPass ? 'text' : 'password'}
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="At least 8 characters"
-                required
-                minLength={8}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/60 focus:bg-white/10 transition-all pr-12"
-              />
-              <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors p-1">
-                {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-2 w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl transition-all shadow-[0_0_24px_rgba(79,70,229,0.4)] hover:shadow-[0_0_32px_rgba(79,70,229,0.6)] active:scale-[0.98] disabled:opacity-60 flex items-center justify-center gap-2"
-          >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create Account'}
-          </button>
-        </form>
-      </div>
-
-      <p className="text-center mt-6 text-slate-500 text-sm">
+      <p className="text-center mt-8 text-zinc-400 text-sm">
         Already have an account?{' '}
-        <Link href="/login" className="text-blue-400 hover:text-blue-300 font-bold transition-colors">
+        <Link href="/login" className="text-black font-bold hover:underline transition-colors">
           Sign in
         </Link>
       </p>
