@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import { Crown, Users, X, ChevronRight, Check } from 'lucide-react';
+import { usePro } from '@/context/ProContext';
+import Link from 'next/link';
 
 export function SidebarWidgets() {
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
-  const [isProActive, setIsProActive] = useState(false);
+  const { isPro: isProActive, setIsPro: setIsProActive } = usePro();
   const [friendTag, setFriendTag] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -41,13 +43,13 @@ export function SidebarWidgets() {
           
           <div className="flex flex-col gap-1">
             {/* Friend 1 (Online) */}
-            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+            <Link href="/profile/Bakhitbek" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
               <div className="w-8 h-8 rounded-full bg-slate-700 relative shrink-0">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bakhitbek" alt="Bakhitbek" className="w-full h-full rounded-full opacity-80" />
                 <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#1a1f2e]"></div>
               </div>
               <span className="text-sm text-slate-200 font-medium truncate">Bakhitbek</span>
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -123,7 +125,7 @@ export function SidebarWidgets() {
             {/* Friends List */}
             <div className="p-4 flex flex-col gap-2 max-h-[40vh] overflow-y-auto">
               {/* Online */}
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+              <Link href="/profile/Bakhitbek" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
                 <div className="w-10 h-10 rounded-full bg-slate-700 relative shrink-0">
                   <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bakhitbek" alt="Bakhitbek" className="w-full h-full rounded-full opacity-80" />
                   <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1a1f2e]"></div>
@@ -132,10 +134,10 @@ export function SidebarWidgets() {
                   <span className="text-sm text-slate-200 font-bold">Bakhitbek</span>
                   <span className="text-xs text-green-400">Online</span>
                 </div>
-              </div>
+              </Link>
 
               {/* Offline */}
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer opacity-70">
+              <Link href="/profile/Aybatyr" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer opacity-70">
                 <div className="w-10 h-10 rounded-full bg-slate-700 relative shrink-0">
                   <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aybatyr" alt="Aybatyr" className="w-full h-full rounded-full opacity-60 grayscale" />
                   <div className="absolute bottom-0 right-0 w-3 h-3 bg-slate-500 rounded-full border-2 border-[#1a1f2e]"></div>
@@ -144,7 +146,7 @@ export function SidebarWidgets() {
                   <span className="text-sm text-slate-200 font-bold">Aybatyr</span>
                   <span className="text-xs text-slate-500">Offline</span>
                 </div>
-              </div>
+              </Link>
             </div>
 
           </div>
