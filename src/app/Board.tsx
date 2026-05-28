@@ -30,6 +30,9 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
   // For the piece, we return the class string depending on player
   const getPieceClass = (player: Player) => {
     if (player === 'red') {
+      if (pieceStyle === 'brick_builder') {
+        return 'bg-red-600 rounded-sm shadow-[inset_-4px_-4px_8px_rgba(0,0,0,0.3),inset_4px_4px_8px_rgba(255,255,255,0.4)] relative flex items-center justify-center after:content-[""] after:w-1/2 after:h-1/2 after:rounded-full after:bg-red-600 after:shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3),inset_2px_2px_4px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.5)]';
+      }
       if (pieceStyle === 'pixel_pets') {
         return 'bg-[url("https://fav.farm/🐶")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none';
       }
@@ -42,6 +45,9 @@ export const Board: React.FC<BoardProps> = ({ board, onDropPiece, hintCol, theme
              'bg-gradient-to-br from-rose-500 to-red-600 rounded-full shadow-[inset_0_8px_12px_rgba(255,255,255,0.6),_inset_0_-10px_20px_rgba(0,0,0,0.6),_0_6px_15px_rgba(225,29,72,0.5)] border border-rose-400/60 backdrop-blur-md relative overflow-hidden after:content-[\'\'] after:absolute after:top-[5%] after:left-[15%] after:w-[70%] after:h-[35%] after:bg-gradient-to-b after:from-white/50 after:to-transparent after:rounded-full';
     }
     if (player === 'yellow') {
+      if (pieceStyle === 'brick_builder') {
+        return 'bg-yellow-400 rounded-sm shadow-[inset_-4px_-4px_8px_rgba(0,0,0,0.3),inset_4px_4px_8px_rgba(255,255,255,0.6)] relative flex items-center justify-center after:content-[""] after:w-1/2 after:h-1/2 after:rounded-full after:bg-yellow-400 after:shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3),inset_2px_2px_4px_rgba(255,255,255,0.6),0_2px_4px_rgba(0,0,0,0.5)]';
+      }
       if (pieceStyle === 'pixel_pets') {
         return 'bg-[url("https://fav.farm/🐱")] bg-center bg-contain bg-no-repeat bg-transparent shadow-none';
       }

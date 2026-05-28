@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type AppTheme = 'deep_slate' | 'midnight' | 'cyberpunk' | 'minimalist';
-export type PieceStyle = 'classic' | 'neon' | 'pixel_pets';
+export type PieceStyle = 'classic' | 'neon' | 'pixel_pets' | 'brick_builder';
 
 interface AppContextType {
   isPro: boolean;

@@ -330,6 +330,31 @@ export function SidebarWidgets() {
                     </div>
                   </button>
 
+                  {/* Brick Builder (Requires PRO) */}
+                  <button
+                    onClick={() => isProActive ? setPieceStyle('brick_builder') : setIsProModalOpen(true)}
+                    className={`relative flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                      pieceStyle === 'brick_builder' 
+                        ? 'border-emerald-500 bg-emerald-500/10' 
+                        : 'border-white/10 bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    {!isProActive && (
+                      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] rounded-xl flex items-center justify-end px-4 z-10 cursor-pointer">
+                        <span className="text-xs font-bold text-yellow-400 flex items-center gap-1 bg-yellow-500/20 px-2 py-1 rounded-md border border-yellow-500/30">
+                          <Lock className="w-3 h-3" /> PRO
+                        </span>
+                      </div>
+                    )}
+                    <div className="w-8 h-8 rounded-sm bg-red-600 shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3),inset_2px_2px_4px_rgba(255,255,255,0.4)] flex items-center justify-center flex-shrink-0 relative">
+                      <div className="w-4 h-4 rounded-full bg-red-600 shadow-[inset_-1px_-1px_2px_rgba(0,0,0,0.3),inset_1px_1px_2px_rgba(255,255,255,0.4),0_1px_2px_rgba(0,0,0,0.5)]"></div>
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="text-sm font-bold text-white/90">Brick Builder</span>
+                      <span className="text-xs text-slate-400">Lego style plastic bricks</span>
+                    </div>
+                  </button>
+
                 </div>
               </div>
 

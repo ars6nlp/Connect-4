@@ -310,20 +310,30 @@ export default function Home() {
           )}
 
           {winner && (
-            <div className="col-span-4 flex gap-3">
-              <button 
-                onClick={resetGame}
-                className="flex-1 py-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-emerald-500/30 shadow-lg active:scale-[0.98]"
+            <div className="col-span-4 flex flex-col gap-3">
+              <div className="flex gap-3">
+                <button 
+                  onClick={resetGame}
+                  className="flex-1 py-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-emerald-500/30 shadow-lg active:scale-[0.98]"
+                >
+                  <Play className="w-6 h-6" />
+                  <span className="drop-shadow-sm">Play Again</span>
+                </button>
+                <button 
+                  onClick={quitGame}
+                  className="flex-1 py-4 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white/90 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-white/10 shadow-lg active:scale-[0.98]"
+                >
+                  <ArrowLeft className="w-6 h-6 text-white/50" />
+                  <span className="drop-shadow-sm">Main Menu</span>
+                </button>
+              </div>
+              
+              {/* Mentor Mode Button */}
+              <button
+                onClick={() => setShowCoach(true)}
+                className="fixed bottom-6 left-4 right-4 z-50 md:static md:w-auto py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-[0_8px_32px_rgba(59,130,246,0.5)] md:shadow-lg active:scale-[0.98] border border-blue-400"
               >
-                <Play className="w-6 h-6" />
-                <span className="drop-shadow-sm">Play Again</span>
-              </button>
-              <button 
-                onClick={quitGame}
-                className="flex-1 py-4 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white/90 font-bold rounded-2xl flex flex-col items-center justify-center gap-2 transition-all border border-white/10 shadow-lg active:scale-[0.98]"
-              >
-                <ArrowLeft className="w-6 h-6 text-white/50" />
-                <span className="drop-shadow-sm">Main Menu</span>
+                <Bot className="w-6 h-6" /> Analyze Match
               </button>
             </div>
           )}
@@ -345,13 +355,28 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="space-y-4 text-white/80">
-              <p>Analyzing your match...</p>
-              <div className="bg-white/5 p-4 rounded-2xl border-l-4 border-rose-500 shadow-sm">
-                <strong>Time Management:</strong> &ldquo;В формате Blitz вам нужно думать быстрее. Вы тратили в среднем по 4 секунды на ход.&rdquo;
+            <div className="space-y-4 text-white/80 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+              <p className="text-sm font-medium mb-4">Привет! Я твой наставник. Давай разберем твою последнюю партию простым языком, шаг за шагом.</p>
+              
+              <div className="bg-blue-500/10 p-4 rounded-2xl border-l-4 border-blue-500 shadow-sm flex flex-col gap-2">
+                <strong className="text-blue-300 text-lg flex items-center gap-2">🎯 Шаг 1: Контроль центра</strong>
+                <p className="text-sm">
+                  В игре "4 в ряд" фишки в самом центральном столбце самые полезные. Почему? Потому что из центра можно собрать линию в любую сторону (влево, вправо, по диагонали). В этой партии ты отлично занял центр!
+                </p>
               </div>
-              <div className="bg-white/5 p-4 rounded-2xl border-l-4 border-teal-400 shadow-sm">
-                <strong>Great Setup:</strong> &ldquo;Контроль центра поля в Connect Four критически важен, и вы справились с этим.&rdquo;
+
+              <div className="bg-rose-500/10 p-4 rounded-2xl border-l-4 border-rose-500 shadow-sm flex flex-col gap-2">
+                <strong className="text-rose-400 text-lg flex items-center gap-2">⚠️ Шаг 2: Внимательность</strong>
+                <p className="text-sm">
+                  Ты пропустил ловушку соперника на краю доски. Запомни правило: всегда проверяй линии из 3-х фишек у соперника перед тем, как делать свой ход. Если видишь три фишки — блокируй!
+                </p>
+              </div>
+
+              <div className="bg-teal-500/10 p-4 rounded-2xl border-l-4 border-teal-400 shadow-sm flex flex-col gap-2">
+                <strong className="text-teal-300 text-lg flex items-center gap-2">⏱️ Шаг 3: Время на раздумья</strong>
+                <p className="text-sm">
+                  Ты действовал слишком быстро. Тратить по 2 секунды на ход — круто для интуиции, но иногда лучше остановиться на 5 секунд и посмотреть на всю доску целиком.
+                </p>
               </div>
             </div>
 
